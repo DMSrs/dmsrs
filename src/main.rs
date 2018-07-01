@@ -45,7 +45,7 @@ fn index() -> Template {
     documents.push(Document {
         title: String::from("Results"),
         date: Utc::now(),
-        from: "Scuola Universitaria della Svizzera Italiana".to_string(),
+        from: "Scuola Universitaria Professionale della Svizzera Italiana".to_string(),
         image: Picture {
             src: "img/demo/document-1.jpg".to_string(),
         },
