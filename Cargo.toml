@@ -1,0 +1,9 @@
+[package]
+name = "dmsrs"
+version = "0.1.0"
+authors = ["Denys Vitali <denys@denv.it>"]
+
+[dependencies]
+rocket = "0.3.14"
+rocket_codegen = "0.3.14"
+
