@@ -1,0 +1,24 @@
+{% extends "page" %}
+{%  block page %}
+<div class="documents">
+{% for document in documents %}
+    <div class="document">
+        <div class="title">{{ document.title }}</div>
+        <div class="from"> {{ document.from }}</div>
+        <div class="date">{{ document.date }}</div>
+        <div class="picture">
+            <img src="{{ document.image.src }}"/>
+        </div>
+        <div class="tags">
+            {% for tag in document.tags %}
+                <a href="/tag/{{ tag.slug }}" class="tag-link">
+                    <div class="tag"
+                         style="background-color: {{tag.color}}"
+                    >{{ tag.name }}</div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endfor %}
+</div>
+{%  endblock page %}

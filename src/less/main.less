@@ -1,0 +1,262 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+@bodybgColor: #fefefe;
+@bodyTextColor: #454545;
+
+// Link Colors
+@linkColor: #07A;
+@linkVisitedColor: #941352;
+@linkVisitedInvertedColor: #ac5a82;
+// ===============
+
+@wrongColor: #c0392b;
+@shittyBlue: #0000EE;
+@shittyViolet: #551A8B;
+@motherfuckingColor: #16a085;
+@blockQuoteColor: #456;
+@openQuoteColor: #666;
+
+html{
+  background-color: @bodybgColor;
+}
+body{
+  font-family: "Open Sans", Arial;
+  color: @bodyTextColor;
+  font-size: 16px;
+  margin: 2em auto;
+  max-width: 800px;
+  padding: 1em;
+  line-height: 1.4;
+  text-align: justify;
+}
+
+a{
+  color: @linkColor;
+
+  &:visited{
+    color: @linkVisitedColor;
+  }
+}
+
+.noselect{
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+
+span.citneed{
+  vertical-align: top;
+  font-size: 0.7em;
+  padding-left: 0.3em;
+}
+
+small{
+  font-size: 0.4em;
+}
+
+p.st{
+  margin-top: -1em;
+}
+
+div.fancyPositioning{
+
+  div.picture-left{
+    float: left;
+    width: 40%;
+    overflow: hidden;
+    margin-right: 1em;
+
+    img{
+      width: 100%;
+    }
+
+    p.caption{
+      font-size: 0.7em;
+    }
+  }
+
+  div.tleft{
+    float: left;
+    width: 55%;
+    p:first-child{
+      margin-top: 0;
+    }
+  }
+  &::after{
+    display: block;
+    content: "";
+    clear: both;
+  }
+}
+
+ul{
+  li{
+    img{
+      height: 1em;
+    }
+  }
+}
+
+blockquote{
+  color: @blockQuoteColor;
+  margin-left: 0;
+  margin-top: 2em;
+  margin-bottom: 2em;
+
+  span{
+    float: left;
+    margin-left: 1rem;
+    padding-top: 1rem;
+  }
+
+  author{
+    display: block;
+    clear: both;
+    font-size: 0.6em;
+    margin-left: 2.4rem;
+    font-style: oblique;
+
+    &:before{
+      content: "- ";
+      margin-right: 1em;
+    }
+  }
+
+  &::before{
+    font-family: "Times New Roman", Times, Arial;
+    color: @openQuoteColor;
+    content: open-quote;
+    font-size: 2.2em;
+    font-weight: 600;
+    float: left;
+    margin-top: 0em;
+    margin-right: 0.2rem;
+    width: 1.2rem;
+  }
+
+  &::after{
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
+
+@media screen and (max-width: 500px) {
+
+  body{
+    text-align: left;
+  }
+
+  div.fancyPositioning{
+    div.picture-left{
+      float: none;
+      width: inherit;
+    }
+
+    div.tleft{
+      float: none;
+      width: inherit;
+    }
+  }
+
+  blockquote{
+    span{
+      width: 80%;
+    }
+    author{
+      padding-top: 1em;
+      width: 80%;
+      margin-left: 15%;
+      &::before{
+        content: "";
+        margin-right: inherit;
+      }
+    }
+  }
+}
+
+/* ==== DMRS Specific Style ==== */
+
+.BoxShadowHelper(@level: 1){
+  & when (@level = 1) {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  }
+  & when (@level = 2) {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  }
+  & when (@level = 3) {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  }
+  & when (@level = 4) {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  }
+  & when (@level = 5) {
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  }
+}
+
+div.documents{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  div.document{
+    display: block;
+    flex: 0 1 auto;
+    width: 300px;
+
+    @margin: 10px;
+    margin-left: @margin;
+    margin-right: @margin;
+
+    div.title {
+      font-weight: bold;
+    }
+
+    div.from {
+      height: 1.5em;
+      font-size: 0.8em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    div.picture{
+      margin-top: 1em;
+      img{
+        width: 300px;
+        height: (300 * 210 / 297) px;
+        .BoxShadowHelper(2);
+      }
+    }
+
+    div.date {
+      font-size: 0.8em;
+    }
+
+    div.tags {
+      margin-top: 10px;
+      a, a:visited {
+        color: inherit;
+        text-decoration: none;
+
+        div.tag {
+          display: inline-block;
+          color: #FFF;
+          text-underline: none;
+          width: 100px;
+          padding: 2px;
+          text-align: center;
+          @borderRadius: 5px;
+          border-radius: @borderRadius @borderRadius @borderRadius @borderRadius;
+          .BoxShadowHelper(1);
+          background-color: #607D8B;
+        }
+      }
+    }
+  }
+}

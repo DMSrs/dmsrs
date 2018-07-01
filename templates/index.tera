@@ -1,0 +1,4 @@
+{% extends "page" %}
+{%  block page %}
+<p>Price is {{ price }} </p>
+{%  endblock page %}
