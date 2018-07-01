@@ -10,6 +10,9 @@ extern crate rocket_contrib;
 extern crate serde;
 extern crate serde_json;
 extern crate tera;
+extern crate postgres;
+extern crate r2d2;
+extern crate r2d2_postgres;
 
 use chrono::prelude::*;
 use rocket_contrib::Template;
@@ -23,56 +26,44 @@ use models::document::Document;
 use models::tag::Tag;
 use models::picture::Picture;
 
-#[get("/")]
-fn index() -> Template {
+mod routes;
+use routes::RoutesHandler;
 
-    let mut context = Context::new();
-    let mut documents : Vec<Document> = Vec::new();
-    documents.push(Document {
-        title: String::from("Credit Card Statement"),
-        from: "Postfinance".to_string(),
-        date: Utc::now(),
-        image: Picture {
-            src: "img/demo/document-1.jpg".to_string(),
-        },
-        tags: vec![Tag{
-            name: "Credit Card".to_string(),
-            slug: "credit-card".to_string(),
-            color: "#FFB74D".to_string()
-        }],
-    });
+mod handlers;
 
-    documents.push(Document {
-        title: String::from("Results"),
-        date: Utc::now(),
-        from: "Scuola Universitaria Professionale della Svizzera Italiana".to_string(),
-        image: Picture {
-            src: "img/demo/document-1.jpg".to_string(),
-        },
-        tags: vec![Tag{
-            name: "School".to_string(),
-            slug: "school".to_string(),
-            color: "#00695C".to_string()
-        }, Tag{
-            name: "Personal".to_string(),
-            slug: "personal".to_string(),
-            color: "#9C27B0".to_string()
-        }],
-    });
+use models::correspondent::Correspondent;
+use r2d2_postgres::PostgresConnectionManager;
+use r2d2_postgres::TlsMode;
+use r2d2::Pool;
 
-    context.add("documents", &documents);
-
-    Template::render("documents", &context)
+#[get("/css/<file..>")]
+fn css_files(file: PathBuf) -> Option<NamedFile> {
+    NamedFile::open(Path::new("static/css/").join(file)).ok()
 }
 
-#[get("/<file..>")]
-fn files(file: PathBuf) -> Option<NamedFile> {
-    NamedFile::open(Path::new("static/").join(file)).ok()
+#[get("/img/<file..>")]
+fn img_files(file: PathBuf) -> Option<NamedFile> {
+    NamedFile::open(Path::new("static/img/").join(file)).ok()
 }
 
 fn main(){
+
+    let manager =
+        PostgresConnectionManager::new(
+            "postgres://postgres:default@172.17.0.2/postgres",
+            TlsMode::None).expect("Unable to connect to DB");
+
+    let pool = Pool::new(manager).expect("Unable to create Pool");
+
+    let rh = RoutesHandler{ pool };
+
     rocket::ignite()
-        .mount("/", routes![index, files])
+        .manage(rh)
+        .mount("/", routes![
+        routes::index::index,
+        routes::documents::document_picture,
+        css_files,
+        img_files])
         .attach(Template::fairing())
         .launch();
 }

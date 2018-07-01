@@ -1,12 +1,14 @@
 use models::picture::Picture;
 use models::tag::Tag;
+use models::correspondent::Correspondent;
 use chrono::Utc;
 use chrono::DateTime;
 
 #[derive(Serialize)]
 pub struct Document {
+    pub id : i32,
     pub title : String,
-    pub from : String,
+    pub from : Correspondent,
     #[serde(with = "document_date_format")]
     pub date : DateTime<Utc>,
     pub image : Picture,
@@ -17,7 +19,7 @@ mod document_date_format {
     use chrono::{DateTime, Utc, TimeZone};
     use serde::{self, Deserialize, Serializer, Deserializer};
 
-    const FORMAT: &'static str = "%Y-%m-%d";
+    const FORMAT: &'static str = "%b %e, %Y";
     pub fn serialize<S>(
         date: &DateTime<Utc>,
         serializer: S,

@@ -209,20 +209,43 @@ div.documents{
     flex: 0 1 auto;
     width: 300px;
 
-    @margin: 10px;
+    @margin: 50px;
     margin-left: @margin;
     margin-right: @margin;
+
+    &:first-child{
+      margin-left: 0;
+    }
 
     div.title {
       font-weight: bold;
     }
 
-    div.from {
-      height: 1.5em;
-      font-size: 0.8em;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+    div.from-date-container {
+      display: flex;
+      flex-direction: row;
+
+      a.from {
+        text-decoration: none;
+        flex: 1 0 0;
+        display: inline-block;
+        height: 1.5em;
+        font-size: 0.8em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 80%;
+      }
+
+      div.date {
+        flex: 0.3 0 0;
+        display: inline-block;
+        color: #777;
+        font-size: 0.8em;
+        width: 20%;
+        margin-left: 10px;
+        text-align: right;
+      }
     }
 
     div.picture{
@@ -234,12 +257,8 @@ div.documents{
       }
     }
 
-    div.date {
-      font-size: 0.8em;
-    }
-
     div.tags {
-      margin-top: 10px;
+      margin-top: 2px;
       a, a:visited {
         color: inherit;
         text-decoration: none;
@@ -248,8 +267,12 @@ div.documents{
           display: inline-block;
           color: #FFF;
           text-underline: none;
-          width: 100px;
-          padding: 2px;
+          width: 90px;
+          font-size: 0.8em;
+          margin-left: 5px;
+          margin-top: 8px;
+          padding-top: 2px;
+          padding-bottom: 2px;
           text-align: center;
           @borderRadius: 5px;
           border-radius: @borderRadius @borderRadius @borderRadius @borderRadius;
