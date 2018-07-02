@@ -46,6 +46,11 @@ fn img_files(file: PathBuf) -> Option<NamedFile> {
     NamedFile::open(Path::new("static/img/").join(file)).ok()
 }
 
+#[get("/fonts/<file..>")]
+fn fonts_files(file: PathBuf) -> Option<NamedFile> {
+    NamedFile::open(Path::new("static/fonts/").join(file)).ok()
+}
+
 fn main(){
 
     let manager =
@@ -60,10 +65,13 @@ fn main(){
     rocket::ignite()
         .manage(rh)
         .mount("/", routes![
-        routes::index::index,
+        routes::documents::index,
+        routes::documents::document_single,
         routes::documents::document_picture,
+        routes::tags::index,
         css_files,
-        img_files])
+        img_files,
+        fonts_files])
         .attach(Template::fairing())
         .launch();
 }

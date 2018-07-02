@@ -24,22 +24,7 @@ pub fn fetch_documents(pool : &Pool<PostgresConnectionManager>) -> Vec<Document>
     if let Ok(rows) = query {
         for row in rows.iter() {
             //let src : String = row.get(0);
-            documents.push(
-                Document {
-                    id: row.get(0),
-                    title: row.get(1),
-                    from: Correspondent {
-                        id: row.get(2),
-                        name: row.get(3),
-                    },
-                    date: Utc.from_utc_date(&(row.get::<usize, NaiveDate>(4)))
-                        .and_hms(0,0,0),
-                    image: Picture {
-                        src: format!("documents/thumbnail/{}", row.get::<usize, i32>(0))
-                    },
-                    tags: Vec::new(),
-                }
-            );
+            documents.push(parse_document(&row));
         }
 
         for doc in documents.iter_mut() {
@@ -52,6 +37,55 @@ pub fn fetch_documents(pool : &Pool<PostgresConnectionManager>) -> Vec<Document>
     }
 
     documents
+}
+
+pub fn fetch_document(pool : &Pool<PostgresConnectionManager>, id: i32) -> Option<Document> {
+    let conn = pool.clone().get().unwrap();
+
+    let mut documents: Vec<Document> = Vec::new();
+    let query = conn.query("SELECT \
+        documents.id,
+        title, \
+        correspondents.id as from_id, \
+        correspondents.name as from_name, \
+        \"date\", \
+        added_on, \
+        pages, \
+        ocr_result \
+     FROM documents \
+     INNER JOIN correspondents ON correspondents.id = documents.correspondent \
+     WHERE documents.hidden = false AND documents.id=$1", &[&id]);
+    if let Ok(rows) = query {
+        let row = rows.get(0);
+        let mut document : Document = parse_document(&row);
+        document.tags = fetch_tags_by_document(pool, &document);
+        return Some(document);
+    } else {
+        println!("Unable to execute query: {}", query.unwrap_err());
+    }
+
+    None
+}
+
+pub fn parse_document(row: &Row) -> Document {
+    return Document {
+        id: row.get(0),
+        title: row.get(1),
+        from: Correspondent {
+        id: row.get(2),
+        name: row.get(3),
+        },
+        date: Utc.from_utc_date(&(row.get::<usize, NaiveDate>(4)))
+        .and_hms(0, 0, 0),
+        added_on: Utc.from_utc_date(&(row.get::<usize, NaiveDate>(5)))
+            .and_hms(0, 0, 0),
+        pages: row.get(6),
+        ocr_result: row.get(7),
+        image: Picture {
+        src: format!("/documents/thumbnail/{}", row.get::<usize, i32>(0))
+        },
+        tags: Vec::new()
+    }
 }
 
 pub fn fetch_tags_by_document(pool : &Pool<PostgresConnectionManager>, doc: &Document) -> Vec<Tag> {

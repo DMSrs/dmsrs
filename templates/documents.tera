@@ -1,5 +1,6 @@
 {% extends "page" %}
 {%  block page %}
+<h2>Documents</h2>
 <div class="documents">
 {% for document in documents %}
     <div class="document">
@@ -10,12 +11,12 @@
             </a>
             <div class="date">{{ document.date }}</div>
         </div>
-        <div class="picture">
-            <img src="{{ document.image.src }}"/>
-        </div>
+        <a href="/documents/{{ document.id }}" class="picture">
+                <img src="{{ document.image.src }}"/>
+        </a>
         <div class="tags">
             {% for tag in document.tags %}
-                <a href="/tag/{{ tag.slug }}" class="tag-link">
+                <a href="/tags/{{ tag.slug }}" class="tag-link">
                     <div class="tag"
                          style="background-color: #{{tag.color}}"
                     >{{ tag.name }}</div>

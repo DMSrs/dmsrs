@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+@import url(/fonts/fontawesome/all.css);
 
 @bodybgColor: #fefefe;
 @bodyTextColor: #454545;
@@ -23,7 +24,7 @@ body{
   font-family: "Open Sans", Arial;
   color: @bodyTextColor;
   font-size: 16px;
-  margin: 2em auto;
+  margin: 1em auto;
   max-width: 800px;
   padding: 1em;
   line-height: 1.4;
@@ -127,7 +128,7 @@ blockquote{
   }
 
   &::before{
-    font-family: "Times New Roman", Times, Arial;
+    font-family: "Times New Roman", Times, Arial, serif;
     color: @openQuoteColor;
     content: open-quote;
     font-size: 2.2em;
@@ -199,91 +200,203 @@ blockquote{
   }
 }
 
-div.documents{
+.tagscontainer{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin-top: 2px;
+
+  a, a:visited {
+    color: inherit;
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    margin-top: 8px;
+    margin-right: 5px;
+
+    div.tag {
+      display: inline-block;
+      color: #FFF;
+      text-underline: none;
+      width: 90px;
+      font-size: 0.8em;
+      padding-top: 2px;
+      padding-bottom: 2px;
+      text-align: center;
+      @borderRadius: 5px;
+      border-radius: @borderRadius @borderRadius @borderRadius @borderRadius;
+      .BoxShadowHelper(1);
+      background-color: #607D8B;
+    }
+  }
+}
+
+.button{
+  cursor: pointer;
+  @radius: 5px;
+  border-radius: @radius @radius @radius @radius;
+  width: 80px;
+  min-height: 30px;
+  color: #EFEFEF;
+  background-color: #90A4AE;
+  border: none;
+  padding: 3px 5px 3px 5px;
+  margin: 4px;
+  .BoxShadowHelper(2);
+
+  &:active {
+    .BoxShadowHelper(1);
+  }
+}
+
+.documentcontainer {
+  display: block;
+  flex: 0 1 1;
+  width: 300px;
+
+  @margin: 50px;
+  margin-bottom: @margin;
+
+  div.title {
+    font-weight: bold;
+  }
+
+  div.from-date-container {
+    display: flex;
+    flex-direction: row;
+
+    a.from {
+      text-decoration: none;
+      flex: 1 0 0;
+      display: inline-block;
+      height: 1.5em;
+      font-size: 0.8em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 80%;
+    }
+
+    div.date {
+      flex: 0.3 0 0;
+      display: inline-block;
+      color: #777;
+      font-size: 0.8em;
+      width: 20%;
+      margin-left: 10px;
+      text-align: right;
+    }
+  }
+
+  a.picture{
+    display: block;
+    cursor: pointer;
+    margin-top: 1em;
+    img{
+      width: 100%;
+      .BoxShadowHelper(2);
+    }
+  }
+
+  div.tags {
+    .tagscontainer
+  }
+}
+
+div#page > div.documents{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: stretch;
   align-content: flex-start;
   justify-content: space-between;
+  margin-top: 2em;
 
   div.document{
-    display: block;
-    flex: 0 1 1;
-    width: 300px;
+    .documentcontainer
+  }
+}
 
-    @margin: 50px;
-    margin-bottom: @margin;
+div#page > div.tags {
+  .tagscontainer
+}
 
-    div.title {
-      font-weight: bold;
-    }
+div#page > div.single-document {
+  display: flex;
+  justify-content: space-between;
 
-    div.from-date-container {
-      display: flex;
-      flex-direction: row;
+  div.document {
+    .documentcontainer;
+    width: 600px;
+  }
 
-      a.from {
-        text-decoration: none;
-        flex: 1 0 0;
-        display: inline-block;
-        height: 1.5em;
-        font-size: 0.8em;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        width: 80%;
-      }
+  div.right-box{
+    width: 50%;
+    margin-left: 2em;
+    font-size: 0.9em;
 
-      div.date {
-        flex: 0.3 0 0;
-        display: inline-block;
-        color: #777;
-        font-size: 0.8em;
-        width: 20%;
-        margin-left: 10px;
-        text-align: right;
-      }
-    }
+    div.attributes {
 
-    div.picture{
-      cursor: pointer;
-      margin-top: 1em;
-      img{
-        width: 300px;
-        height: (300 * 210 / 297) px;
-        .BoxShadowHelper(2);
-      }
-    }
-
-    div.tags {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: space-evenly;
-      margin-top: 2px;
-
-      a, a:visited {
-        color: inherit;
-        text-decoration: none;
+      div.attribute {
         display: flex;
-        flex-direction: row;
-        margin-top: 8px;
-        margin-right: 5px;
+        padding-bottom: 0.1em;
+        @attrNameWidth: 40%;
+        @attrNameMarginRight: 2%;
 
-        div.tag {
-          display: inline-block;
-          color: #FFF;
-          text-underline: none;
-          width: 90px;
-          font-size: 0.8em;
-          padding-top: 2px;
-          padding-bottom: 2px;
-          text-align: center;
-          @borderRadius: 5px;
-          border-radius: @borderRadius @borderRadius @borderRadius @borderRadius;
-          .BoxShadowHelper(1);
-          background-color: #607D8B;
+        .attribute-name {
+          display: block;
+          font-weight: bold;
+          flex: 1 auto auto;
+          width: @attrNameWidth;
+          margin-right: @attrNameMarginRight;
+          /*&:after{
+            content: ":";
+          }*/
+          align-self: center;
+        }
+
+        .attribute-value {
+          display: block;
+          width: 100% - @attrNameWidth - @attrNameMarginRight;
+          flex: 0.5 auto auto;
+          }
+
+        .attribute-value.tags {
+          .tagscontainer;
+          justify-content: flex-start;
+        }
+      }
+    }
+
+    div.actions{
+
+      div.actions-content {
+        display: flex;
+        justify-content: space-evenly;
+        button {
+          .button;
+          width: 100px;
+
+          &.download {
+            background-color: #1E88E5;
+          }
+
+          &.view {
+            background-color: #5E35B1;
+          }
+
+          &.edit {
+            background-color: #FB8C00;
+          }
+
+          &.delete{
+            background-color: #e53935;
+          }
+
+          i.far{
+            padding-right: 0.5em;
+          }
         }
       }
     }

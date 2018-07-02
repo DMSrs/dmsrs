@@ -11,6 +11,10 @@ pub struct Document {
     pub from : Correspondent,
     #[serde(with = "document_date_format")]
     pub date : DateTime<Utc>,
+    #[serde(with = "document_date_format")]
+    pub added_on : DateTime<Utc>,
+    pub ocr_result : String,
+    pub pages: i32,
     pub image : Picture,
     pub tags : Vec<Tag>
 }
