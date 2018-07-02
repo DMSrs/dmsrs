@@ -75,14 +75,14 @@ pub fn parse_document(row: &Row) -> Document {
         id: row.get(2),
         name: row.get(3),
         },
-        date: Utc.from_utc_date(&(row.get::<usize, NaiveDate>(4)))
+        date: Utc.from_utc_date(&(row.get::<_, NaiveDate>(4)))
         .and_hms(0, 0, 0),
-        added_on: Utc.from_utc_date(&(row.get::<usize, NaiveDate>(5)))
+        added_on: Utc.from_utc_date(&(row.get::<_, NaiveDate>(5)))
             .and_hms(0, 0, 0),
         pages: row.get(6),
         ocr_result: row.get(7),
         image: Picture {
-        src: format!("/documents/thumbnail/{}", row.get::<usize, i32>(0))
+        src: format!("/documents/thumbnail/{}", row.get::<_, i32>(0))
         },
         tags: Vec::new()
     }
