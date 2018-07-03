@@ -17,7 +17,9 @@ pub fn fetch_documents(pool : &Pool<PostgresConnectionManager>) -> Vec<Document>
         correspondents.id as from_id, \
         correspondents.name as from_name, \
         \"date\", \
-        pages \
+        added_on, \
+        pages, \
+        ocr_result \
      FROM documents \
      INNER JOIN correspondents ON correspondents.id = documents.correspondent \
      WHERE documents.hidden = false", &[]);
