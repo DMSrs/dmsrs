@@ -1,4 +1,4 @@
-{% extends "page" %}
+{% extends "menupage" %}
 {%  block page %}
 <h2>Documents</h2>
 <div class="documents">

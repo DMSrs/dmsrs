@@ -318,6 +318,83 @@ div#page > div.documents{
   }
 }
 
+
+/*
+    Colors
+ */
+
+@mainViolet: #4a0e8e;
+
+/* Logo Colors */
+@lightBlue: #68b3d9;
+@lightViolet: #6761e6;
+@blue: #4728de;
+@violet: #8240e6;
+@darkViolet: #72418f;
+@pink: #da4ce8;
+
+
+@headerHeight: 50px;
+
+body {
+  padding-top: @headerHeight + 10px;
+}
+
+body > header {
+  position: absolute;
+  display: flex;
+  top: 0;
+  left: 0;
+  margin: 0;
+  width: 100%;
+  padding: 10px;
+  overflow: hidden;
+  height: @headerHeight;
+  vertical-align: baseline;
+  align-content: space-between;
+
+  div#logo {
+    flex: 1 0 auto;
+    width: 200px;
+    overflow: hidden;
+    height: @headerHeight;
+    align-self: flex-start;
+    margin-left: 1em;
+
+    img{
+      height: @headerHeight;
+    }
+  }
+
+  menu {
+    display: block;
+    flex: 1 0 auto;
+    margin-right: 1em;
+    margin-left: 1em;
+    max-width: 40vw;
+    ul {
+      display: flex;
+      flex-direction: row;
+      align-content: space-evenly;
+      flex-grow: 1;
+      a, a:visited {
+        flex: 1 0 auto;
+        color: #666;
+        text-decoration: none;
+        margin-right: 3em;
+      }
+
+      a.current {
+        color: @mainViolet;
+      }
+
+      li {
+        display: block;
+      }
+    }
+  }
+}
+
 div#page > div.tags {
   .tagscontainer
 }
@@ -360,7 +437,7 @@ div#page > div.single-document {
           display: block;
           width: 100% - @attrNameWidth - @attrNameMarginRight;
           flex: 0.5 auto auto;
-          }
+        }
 
         .attribute-value.tags {
           .tagscontainer;

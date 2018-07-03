@@ -6,6 +6,15 @@
     </head>
 
     <body>
+        <header>
+            <div id="logo">
+                <a href="/"><img src="/img/logo.svg"/></a>
+            </div>
+            <menu>
+                {% block menu %}
+                {% endblock menu %}
+            </menu>
+        </header>
         <div id="page">
             {% block page %}
             {% endblock page %}

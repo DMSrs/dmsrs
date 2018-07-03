@@ -65,6 +65,7 @@ fn main(){
     rocket::ignite()
         .manage(rh)
         .mount("/", routes![
+        routes::index::index,
         routes::documents::index,
         routes::documents::document_single,
         routes::documents::document_picture,

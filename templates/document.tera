@@ -1,4 +1,4 @@
-{% extends "page" %}
+{% extends "menupage" %}
 {%  block page %}
 <h2>{{ document.title }}</h2>
 <div class="single-document">

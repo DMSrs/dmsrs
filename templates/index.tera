@@ -1,4 +1,3 @@
-{% extends "page" %}
+{% extends "menupage" %}
 {%  block page %}
-<p>Price is {{ price }} </p>
 {%  endblock page %}

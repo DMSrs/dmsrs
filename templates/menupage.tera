@@ -1,0 +1,8 @@
+{% extends "page" %}
+{%  block menu %}
+<ul>
+    <a href="/"><li>Home</li></a>
+    <a href="/documents" class="current"><li>Documents</li></a>
+    <a href="/tags"><li>Tags</li></a>
+</ul>
+{% endblock menu %}
