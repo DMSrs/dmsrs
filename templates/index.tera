@@ -1,3 +1,4 @@
 {% extends "menupage" %}
 {%  block page %}
+<h2>Home</h2>
 {%  endblock page %}
