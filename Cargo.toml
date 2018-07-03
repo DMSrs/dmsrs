@@ -2,8 +2,11 @@
 name = "dmsrs"
 version = "0.1.0"
 authors = ["Denys Vitali <denys@denv.it>"]
+build = "src/build.rs"
 
 [dependencies]
+askama = { version = "0.7", features = ["with-rocket"]}
+atomic = {version = "0.4", features = ["nightly"]}
 chrono =  { version = "0.4", features = ["serde"] }
 rocket = "0.3.14"
 rocket_codegen = "0.3.14"
@@ -19,3 +22,6 @@ postgres = { version= "0.15", features = ["with-chrono"] }
 version = "*"
 default-features = false
 features = ["handlebars_templates", "tera_templates"]
+
+[build-dependencies]
+askama = { version = "0.7", features = ["with-rocket"]}

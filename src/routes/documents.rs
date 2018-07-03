@@ -3,39 +3,49 @@ use routes::RoutesHandler;
 use std::fs::File;
 
 use handlers::documenthandler::fetch_documents;
-use rocket_contrib::Template;
 use tera::Context;
 use models::document::Document;
 use handlers::documenthandler::fetch_document;
 
+use askama::Template;
+
+#[derive(Template)]
+#[template(path = "document.html")]
+pub struct SingleDocument<'a> {
+    document: Document,
+    rh: State<'a, RoutesHandler>
+}
+
+#[derive(Template)]
+#[template(path = "404.html")]
+pub struct Error404{}
+
+#[derive(Template)]
+#[template(path = "documents.html")]
+pub struct MultipleDocuments<'a>{
+    documents: Vec<Document>,
+    rh: State<'a, RoutesHandler>
+}
+
 #[get("/documents/<id>")]
-pub fn document_single(rh: State<RoutesHandler>, id: i32) -> Template {
+pub fn document_single(rh: State<RoutesHandler>, id: i32) -> Option<SingleDocument> {
 
     let mut context = Context::new();
     let document = fetch_document(&rh.pool, id);
 
-    match document {
-        Some(d) => {
-            context.add("document", &d);
-            Template::render("document", &context)
-        },
-        None => {
-            Template::render("404", &context)
-        }
-    }
+    document.map(|doc| SingleDocument { document: doc, rh})
 }
 
 #[get("/documents")]
-pub fn index(rh: State<RoutesHandler>) -> Template {
+pub fn index(rh: State<RoutesHandler>) -> MultipleDocuments {
+
+    println!("Viewing: {}", *rh.current_page.lock().unwrap());
 
     let mut context = Context::new();
     let mut documents : Vec<Document> = Vec::new();
 
     let documents = fetch_documents(&rh.pool);
-
-    context.add("documents", &documents);
-
-    Template::render("documents", &context)
+    MultipleDocuments { documents, rh }
 }
 
 #[get("/documents/thumbnail/<id>")]

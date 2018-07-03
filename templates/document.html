@@ -1,0 +1,71 @@
+{% extends "menupage.html" %}
+{%  block page %}
+<h2>{{ document.title }}</h2>
+<div class="single-document">
+    <div class="document">
+        <div class="from-date-container">
+            <a href="/correspondent/{{ document.from.id }}" class="from">
+                <span>{{ document.from.name }}</span>
+            </a>
+            <div class="date">{{ document.date.format("%b %e, %Y") }}</div>
+        </div>
+        <a href="/documents/view/{{ document.id }}" class="picture">
+                <img src="{{ document.image.src|safe }}"/>
+        </a>
+    </div>
+    <div class="right-box">
+        <div class="attributes">
+            <h3>Document Attributes</h3>
+            <div class="attribute">
+                <span class="attribute-name">Title</span>
+                <span class="attribute-value">{{ document.title }}</span>
+            </div>
+
+            <div class="attribute">
+                <span class="attribute-name">From</span>
+                <span class="attribute-value">
+                    <a href="/correspondent/{{ document.from.id }}">{{ document.from.name }}</a>
+                </span>
+            </div>
+
+            <div class="attribute">
+                <span class="attribute-name">Date</span>
+                <span class="attribute-value">{{ document.date.format("%b %e, %Y") }}</span>
+            </div>
+
+            <div class="attribute">
+                <span class="attribute-name">Added on</span>
+                <span class="attribute-value">{{ document.added_on.format("%b %e, %Y") }}</span>
+            </div>
+
+            <div class="attribute">
+                <span class="attribute-name">Pages</span>
+                <span class="attribute-value">{{ document.pages }}</span>
+            </div>
+
+            <div class="attribute">
+                <span class="attribute-name">Tags</span>
+                <div class="attribute-value tags">
+                    {% for tag in document.tags %}
+                        <a href="/tags/{{ tag.slug }}" class="tag-link">
+                            <div class="tag"
+                                 style="background-color: #{{tag.color}}"
+                            >{{ tag.name }}</div>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <h4>Actions</h4>
+            <div class="actions-content">
+                <button class="view"><i class="far fa-eye"></i> View</button>
+                <button class="download"><i class="far fa-arrow-alt-circle-down"></i> Get</button>
+                <button class="edit"><i class="far fa-edit"></i> Edit</button>
+                <button class="delete"><i class="far fa-trash-alt"></i>Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+{%  endblock page %}

@@ -1,0 +1,11 @@
+{% extends "page.html" %}
+{%  block menu %}
+<ul>
+    {##
+    {% //let m_data : String = *(rh.current_page.lock().unwrap()) %}
+    ##}
+    {% for me in rh.menu %}
+    <a href="{{me.href}}"><li>{{me.name}}</li></a>
+    {% endfor %}
+</ul>
+{% endblock menu %}

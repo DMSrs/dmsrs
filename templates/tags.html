@@ -1,0 +1,13 @@
+{% extends "menupage.html" %}
+{%  block page %}
+<h2>Tags</h2>
+<div class="tags">
+{% for tag in tags %}
+    <a href="/tags/{{ tag.slug }}" class="tag-link">
+        <div class="tag"
+             style="background-color: #{{tag.color}}"
+        >{{ tag.name }}</div>
+    </a>
+{% endfor %}
+</div>
+{%  endblock page %}

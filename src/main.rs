@@ -4,6 +4,10 @@
 #[macro_use]
 extern crate serde_derive;
 
+#[macro_use]
+extern crate askama;
+
+extern crate atomic;
 extern crate chrono;
 extern crate rocket;
 extern crate rocket_contrib;
@@ -14,7 +18,6 @@ extern crate postgres;
 extern crate r2d2;
 extern crate r2d2_postgres;
 
-use chrono::prelude::*;
 use rocket_contrib::Template;
 use tera::Context;
 use std::path::PathBuf;
@@ -35,6 +38,10 @@ use models::correspondent::Correspondent;
 use r2d2_postgres::PostgresConnectionManager;
 use r2d2_postgres::TlsMode;
 use r2d2::Pool;
+use models::menuentry::MenuEntry;
+use rocket::fairing::AdHoc;
+use std::sync::Mutex;
+use std::cell::RefCell;
 
 #[get("/css/<file..>")]
 fn css_files(file: PathBuf) -> Option<NamedFile> {
@@ -60,10 +67,20 @@ fn main(){
 
     let pool = Pool::new(manager).expect("Unable to create Pool");
 
-    let rh = RoutesHandler{ pool };
+    let rh = RoutesHandler{ pool, current_page: Mutex::new(String::new()),
+    menu: vec![MenuEntry{
+        name: "Home".to_string(),
+        href: "/".to_string()
+    }, MenuEntry{
+        name: "Documents".to_string(),
+        href: "/documents".to_string()
+    }, MenuEntry{
+        name: "Tags".to_string(),
+        href: "/tags".to_string()
+    }]};
 
     rocket::ignite()
-        .manage(rh)
+        .attach(rh)
         .mount("/", routes![
         routes::index::index,
         routes::documents::index,

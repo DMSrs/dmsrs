@@ -58,8 +58,12 @@ pub fn fetch_document(pool : &Pool<PostgresConnectionManager>, id: i32) -> Optio
      INNER JOIN correspondents ON correspondents.id = documents.correspondent \
      WHERE documents.hidden = false AND documents.id=$1", &[&id]);
     if let Ok(rows) = query {
+        if rows.is_empty() {
+            return None
+        }
         let row = rows.get(0);
         let mut document : Document = parse_document(&row);
+        println!("{}", document.image.src);
         document.tags = fetch_tags_by_document(pool, &document);
         return Some(document);
     } else {

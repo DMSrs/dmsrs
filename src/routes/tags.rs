@@ -1,17 +1,19 @@
 use rocket::State;
 use routes::RoutesHandler;
 use std::fs::File;
-use rocket_contrib::Template;
-use tera::Context;
 use models::tag::Tag;
 use handlers::taghandler::fetch_tags;
+use askama::Template;
+
+#[derive(Template)]
+#[template(path = "tags.html")]
+pub struct Tags<'a> {
+    tags: Vec<Tag>,
+    rh: State<'a, RoutesHandler>
+}
 
 #[get("/tags")]
-pub fn index(rh: State<RoutesHandler>) -> Template {
-    let mut context = Context::new();
+pub fn index(rh: State<RoutesHandler>) -> Tags {
     let tags = fetch_tags(&rh.pool);
-
-    context.add("tags", &tags);
-
-    Template::render("tags", &context)
+    Tags { tags , rh }
 }
