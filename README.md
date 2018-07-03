@@ -1,6 +1,7 @@
 # DMS.rs
 A Document Management System, written in Rust
 
+<p align="center"><img src="./static/img/logo.png" width="300"/></p>
 
 ## Screenshots 
 
