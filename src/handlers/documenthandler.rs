@@ -12,7 +12,6 @@ use poppler::PopplerDocument;
 use cairo::prelude::*;
 use cairo::ImageSurface;
 use cairo::enums::Format::ARgb32;
-use tempfile::tempfile;
 use cairo::Context;
 use std::path::Path;
 use poppler::CairoSetSize;
@@ -229,4 +228,18 @@ pub fn fetch_tags_by_document(pool : &Pool<PostgresConnectionManager>, doc: &Doc
     }
 
     tags
+}
+
+pub fn get_document_filename(pool : &Pool<PostgresConnectionManager>, id: i32) -> String {
+    let document = fetch_document(pool, id);
+
+    match document {
+        Some(d) => {
+            let clean_title = d.title.replace(" ", "_").replace('"', "").replace('/', "_");
+            format!("{}_{}.pdf", d.date.format("%Y-%m-%d"), clean_title)
+        }
+        None => {
+            String::from("unknown.pdf")
+        }
+    }
 }

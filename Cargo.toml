@@ -19,7 +19,6 @@ r2d2 = "0.8.2"
 r2d2_postgres = "0.14.0"
 postgres = { version= "0.15", features = ["with-chrono"] }
 poppler = { git = "https://github.com/DMSrs/poppler-rs" }
-tempfile = "3"
 
 [dependencies.rocket_contrib]
 version = "*"

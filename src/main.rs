@@ -19,7 +19,6 @@ extern crate r2d2;
 extern crate r2d2_postgres;
 extern crate poppler;
 extern crate cairo;
-extern crate tempfile;
 
 use rocket_contrib::Template;
 use tera::Context;
@@ -91,6 +90,8 @@ fn main(){
         routes::correspondents::correspondent_single,
         routes::index::index,
         routes::documents::index,
+        routes::documents::document_view_single,
+        routes::documents::document_download_single,
         routes::documents::document_single,
         routes::documents::document_picture,
         routes::tags::index,
