@@ -8,12 +8,16 @@ use models::document::Document;
 use handlers::documenthandler::fetch_document;
 
 use askama::Template;
+use fairings::pathfairing::PathFairing;
+use fairings::pathfairing::RocketPath;
+use std::sync::Arc;
 
 #[derive(Template)]
 #[template(path = "document.html")]
 pub struct SingleDocument<'a> {
     document: Document,
-    rh: State<'a, RoutesHandler>
+    rh: State<'a, RoutesHandler>,
+    current_path: String
 }
 
 #[derive(Template)]
@@ -24,28 +28,28 @@ pub struct Error404{}
 #[template(path = "documents.html")]
 pub struct MultipleDocuments<'a>{
     documents: Vec<Document>,
-    rh: State<'a, RoutesHandler>
+    rh: State<'a, RoutesHandler>,
+    current_path: String
 }
 
 #[get("/documents/<id>")]
-pub fn document_single(rh: State<RoutesHandler>, id: i32) -> Option<SingleDocument> {
-
+pub fn document_single<'a>(rh: State<'a, RoutesHandler>, path: State<Arc<RocketPath>>, id: i32) -> Option<SingleDocument<'a>> {
+    let mut current_path : String = (*(path.path.lock().unwrap())).clone();
     let mut context = Context::new();
     let document = fetch_document(&rh.pool, id);
 
-    document.map(|doc| SingleDocument { document: doc, rh})
+    document.map(|doc| SingleDocument { document: doc, rh, current_path })
 }
 
 #[get("/documents")]
-pub fn index(rh: State<RoutesHandler>) -> MultipleDocuments {
-
-    println!("Viewing: {}", *rh.current_page.lock().unwrap());
+pub fn index<'a>(rh: State<'a, RoutesHandler>, path: State<Arc<RocketPath>>) -> MultipleDocuments<'a> {
+    let mut current_path : String = (*(path.path.lock().unwrap())).clone();
 
     let mut context = Context::new();
     let mut documents : Vec<Document> = Vec::new();
 
     let documents = fetch_documents(&rh.pool);
-    MultipleDocuments { documents, rh }
+    MultipleDocuments { documents, rh, current_path }
 }
 
 #[get("/documents/thumbnail/<id>")]

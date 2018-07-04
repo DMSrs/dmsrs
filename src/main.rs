@@ -24,6 +24,9 @@ use std::path::PathBuf;
 use rocket::response::NamedFile;
 use std::path::Path;
 
+mod fairings;
+use fairings::pathfairing::PathFairing;
+
 mod models;
 use models::document::Document;
 use models::tag::Tag;
@@ -53,11 +56,6 @@ fn img_files(file: PathBuf) -> Option<NamedFile> {
     NamedFile::open(Path::new("static/img/").join(file)).ok()
 }
 
-#[get("/fonts/<file..>")]
-fn fonts_files(file: PathBuf) -> Option<NamedFile> {
-    NamedFile::open(Path::new("static/fonts/").join(file)).ok()
-}
-
 fn main(){
 
     let manager =
@@ -67,20 +65,21 @@ fn main(){
 
     let pool = Pool::new(manager).expect("Unable to create Pool");
 
-    let rh = RoutesHandler{ pool, current_page: Mutex::new(String::new()),
-    menu: vec![MenuEntry{
-        name: "Home".to_string(),
-        href: "/".to_string()
-    }, MenuEntry{
-        name: "Documents".to_string(),
-        href: "/documents".to_string()
-    }, MenuEntry{
-        name: "Tags".to_string(),
-        href: "/tags".to_string()
-    }]};
+    let rh = RoutesHandler{ pool,
+        menu: vec![MenuEntry{
+            name: "Home".to_string(),
+            href: "/".to_string()
+        }, MenuEntry{
+            name: "Documents".to_string(),
+            href: "/documents".to_string()
+        }, MenuEntry{
+            name: "Tags".to_string(),
+            href: "/tags".to_string()
+        }]};
 
     rocket::ignite()
-        .attach(rh)
+        .manage(rh)
+        .attach(PathFairing::new())
         .mount("/", routes![
         routes::index::index,
         routes::documents::index,
@@ -92,4 +91,9 @@ fn main(){
         fonts_files])
         .attach(Template::fairing())
         .launch();
+}
+
+#[get("/fonts/<file..>")]
+fn fonts_files(file: PathBuf) -> Option<NamedFile> {
+    NamedFile::open(Path::new("static/fonts/").join(file)).ok()
 }
