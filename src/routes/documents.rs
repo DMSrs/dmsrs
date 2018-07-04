@@ -10,6 +10,7 @@ use askama::Template;
 use fairings::pathfairing::PathFairing;
 use fairings::pathfairing::RocketPath;
 use std::sync::Arc;
+use handlers::documenthandler::get_document_thumbnail;
 
 #[derive(Template)]
 #[template(path = "document.html")]
@@ -46,5 +47,5 @@ pub fn index<'a>(rh: State<'a, RoutesHandler>, path: State<Arc<RocketPath>>) -> 
 
 #[get("/documents/thumbnail/<id>")]
 pub fn document_picture(rh: State<RoutesHandler>, id: i32) -> File {
-    File::open("static/img/demo/document-1.jpg").unwrap()
+    return get_document_thumbnail(id);
 }

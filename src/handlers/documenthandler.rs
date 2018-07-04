@@ -6,6 +6,16 @@ use models::correspondent::Correspondent;
 use models::picture::Picture;
 use chrono::{Date, DateTime, FixedOffset, NaiveDate, NaiveDateTime, NaiveTime, TimeZone, Utc};
 use models::tag::Tag;
+use std::fs::File;
+use poppler::PopplerPage;
+use poppler::PopplerDocument;
+use cairo::prelude::*;
+use cairo::ImageSurface;
+use cairo::enums::Format::ARgb32;
+use tempfile::tempfile;
+use cairo::Context;
+use std::path::Path;
+use poppler::CairoSetSize;
 
 pub fn fetch_documents(pool : &Pool<PostgresConnectionManager>) -> Vec<Document> {
     let conn = pool.clone().get().unwrap();
@@ -163,6 +173,36 @@ pub fn parse_document(row: &Row) -> Document {
     }
 }
 
+pub fn get_document_thumbnail(id: i32) -> File {
+    let path = format!("data/pdf/{}.pdf", id);
+    let thumbnail_path = format!("data/thumbnails/{}.png", id);
+
+    if Path::new(&thumbnail_path).exists() {
+        return File::open(&thumbnail_path).unwrap();
+    }
+
+    if ! Path::new(&path).exists() {
+        return File::open("static/img/document-not-found.png").unwrap();
+    }
+
+    let doc : PopplerDocument = PopplerDocument::new_from_file(path, "").unwrap();
+    let num_pages = doc.get_n_pages();
+    let page : PopplerPage = doc.get_page(0).unwrap();
+    let (w, h) = page.get_size();
+
+    let mut surface = ImageSurface::create(ARgb32,  w as i32, h as i32).unwrap();
+    let mut ctx = Context::new(&mut surface);
+
+    ctx.save();
+    page.render_for_printing(&mut ctx);
+    ctx.restore();
+    ctx.show_page();
+
+    let mut f : File = File::create(&thumbnail_path).unwrap();
+    surface.write_to_png(&mut f).expect("Unable to write PNG");
+    File::open(&thumbnail_path).unwrap()
+}
+
 pub fn fetch_tags_by_document(pool : &Pool<PostgresConnectionManager>, doc: &Document) -> Vec<Tag> {
     let conn = pool.clone().get().expect("Unable to get Pool Instance");
     let query = conn.query(r#"SELECT
@@ -190,4 +230,3 @@ pub fn fetch_tags_by_document(pool : &Pool<PostgresConnectionManager>, doc: &Doc
 
     tags
 }
-

@@ -17,6 +17,9 @@ extern crate tera;
 extern crate postgres;
 extern crate r2d2;
 extern crate r2d2_postgres;
+extern crate poppler;
+extern crate cairo;
+extern crate tempfile;
 
 use rocket_contrib::Template;
 use tera::Context;
