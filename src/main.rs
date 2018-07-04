@@ -73,6 +73,9 @@ fn main(){
             name: "Documents".to_string(),
             href: "/documents".to_string()
         }, MenuEntry{
+            name: "Correspondents".to_string(),
+            href: "/correspondents".to_string()
+        }, MenuEntry{
             name: "Tags".to_string(),
             href: "/tags".to_string()
         }]};
@@ -81,6 +84,8 @@ fn main(){
         .manage(rh)
         .attach(PathFairing::new())
         .mount("/", routes![
+        routes::correspondents::index,
+        routes::correspondents::correspondent_single,
         routes::index::index,
         routes::documents::index,
         routes::documents::document_single,

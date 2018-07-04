@@ -3,7 +3,6 @@ use routes::RoutesHandler;
 use std::fs::File;
 
 use handlers::documenthandler::fetch_documents;
-use tera::Context;
 use models::document::Document;
 use handlers::documenthandler::fetch_document;
 
@@ -21,10 +20,6 @@ pub struct SingleDocument<'a> {
 }
 
 #[derive(Template)]
-#[template(path = "404.html")]
-pub struct Error404{}
-
-#[derive(Template)]
 #[template(path = "documents.html")]
 pub struct MultipleDocuments<'a>{
     documents: Vec<Document>,
@@ -35,7 +30,6 @@ pub struct MultipleDocuments<'a>{
 #[get("/documents/<id>")]
 pub fn document_single<'a>(rh: State<'a, RoutesHandler>, path: State<Arc<RocketPath>>, id: i32) -> Option<SingleDocument<'a>> {
     let mut current_path : String = (*(path.path.lock().unwrap())).clone();
-    let mut context = Context::new();
     let document = fetch_document(&rh.pool, id);
 
     document.map(|doc| SingleDocument { document: doc, rh, current_path })
@@ -44,8 +38,6 @@ pub fn document_single<'a>(rh: State<'a, RoutesHandler>, path: State<Arc<RocketP
 #[get("/documents")]
 pub fn index<'a>(rh: State<'a, RoutesHandler>, path: State<Arc<RocketPath>>) -> MultipleDocuments<'a> {
     let mut current_path : String = (*(path.path.lock().unwrap())).clone();
-
-    let mut context = Context::new();
     let mut documents : Vec<Document> = Vec::new();
 
     let documents = fetch_documents(&rh.pool);

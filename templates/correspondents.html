@@ -1,0 +1,11 @@
+{% extends "menupage.html" %}
+{%  block page %}
+<h2>Correspondents</h2>
+<div class="correspondents">
+{% for correspondent in correspondents %}
+    <a href="/correspondents/{{ correspondent.id }}">
+        <div class="correspondent">{{ correspondent.name }}</div>
+    </a>
+{% endfor %}
+</div>
+{%  endblock page %}

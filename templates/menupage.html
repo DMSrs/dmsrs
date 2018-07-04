@@ -7,10 +7,12 @@
     {% for me in rh.menu %}
         {% if current_path.starts_with(me.href.as_str()) && me.href != "/" ||
             current_path == "/" && me.href == "/" %}
-        <a href="{{me.href}}" class="current"><li>{{me.name}}</li></a>
+        <li class="current">
         {% else %}
-        <a href="{{me.href}}"><li>{{me.name}}</li></a>
+        <li>
         {% endif %}
+            <a href="{{me.href}}">{{me.name}}</a>
+        </li>
     {% endfor %}
 </ul>
 {% endblock menu %}
