@@ -43,3 +43,29 @@ pub fn fetch_tags(pool : &Pool<PostgresConnectionManager>) -> Vec<Tag> {
 
     tags
 }
+
+pub fn fetch_tag(pool: &Pool<PostgresConnectionManager>, slug: String) -> Option<Tag> {
+    let conn = pool.clone().get().unwrap();
+
+    let query = conn.query("SELECT slug, name, color \
+    FROM tags \
+    WHERE tags.slug = $1", &[&slug]);
+
+    if let Ok(rows) = query {
+        if rows.is_empty() {
+            return None;
+        }
+
+        let row = rows.get(0);
+        return Some(Tag {
+                slug: row.get(0),
+                name: row.get(1),
+                color: row.get(2)
+            }
+        );
+    } else {
+        let err = query.unwrap_err();
+        println!("Unable to fetch rows! {}", err);
+    }
+    None
+}

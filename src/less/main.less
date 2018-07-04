@@ -262,13 +262,13 @@ blockquote{
 
   div.title {
     font-weight: bold;
-    width: 90%;
+    width: 100%;
   }
 
   div.from-date-container {
     display: flex;
     flex-direction: row;
-    width: 90%;
+    width: 100%;
 
     a.from {
       text-decoration: none;
@@ -312,7 +312,7 @@ blockquote{
   }
 }
 
-div#page > div.documents{
+.documentscontainer {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -322,7 +322,52 @@ div#page > div.documents{
   margin-top: 2em;
 
   div.document{
-    .documentcontainer
+    .documentcontainer;
+  }
+}
+
+div#page > div.documents {
+  .documentscontainer;
+}
+
+div.color-box{
+  display: block;
+  @size: 15px;
+  margin-top: 4px;
+  width: @size;
+  height: @size;
+  .BoxShadowHelper(1);
+}
+
+.attributes {
+  div.attribute {
+    display: flex;
+    padding-bottom: 0.1em;
+    @attrNameWidth: 40%;
+    @attrNameMarginRight: 2%;
+
+    .attribute-name {
+      display: block;
+      font-weight: bold;
+      flex: 1 auto auto;
+      width: @attrNameWidth;
+      margin-right: @attrNameMarginRight;
+      /*&:after{
+        content: ":";
+      }*/
+      align-self: center;
+    }
+
+    .attribute-value {
+      display: block;
+      width: 100% - @attrNameWidth - @attrNameMarginRight;
+      flex: 0.5 auto auto;
+    }
+
+    .attribute-value.tags {
+      .tagscontainer;
+      justify-content: flex-start;
+    }
   }
 }
 
@@ -409,6 +454,22 @@ div#page > div.tags {
   .tagscontainer
 }
 
+div#page > div.tag-page {
+  div.attributes{
+    .attributes;
+  }
+
+  div.documents {
+    .documentscontainer
+  }
+}
+
+div#page > div.correspondent-page {
+  div.documents {
+    .documentscontainer
+  }
+}
+
 div#page > div.single-document {
   display: flex;
   justify-content: space-between;
@@ -423,36 +484,7 @@ div#page > div.single-document {
     font-size: 0.9em;
 
     div.attributes {
-
-      div.attribute {
-        display: flex;
-        padding-bottom: 0.1em;
-        @attrNameWidth: 40%;
-        @attrNameMarginRight: 2%;
-
-        .attribute-name {
-          display: block;
-          font-weight: bold;
-          flex: 1 auto auto;
-          width: @attrNameWidth;
-          margin-right: @attrNameMarginRight;
-          /*&:after{
-            content: ":";
-          }*/
-          align-self: center;
-        }
-
-        .attribute-value {
-          display: block;
-          width: 100% - @attrNameWidth - @attrNameMarginRight;
-          flex: 0.5 auto auto;
-        }
-
-        .attribute-value.tags {
-          .tagscontainer;
-          justify-content: flex-start;
-        }
-      }
+      .attributes
     }
 
     div.actions{

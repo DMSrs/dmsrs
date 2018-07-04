@@ -1,0 +1,44 @@
+{% extends "menupage.html" %}
+{%  block page %}
+<div class="tag-page">
+<h2>Tag "{{ tag.name }}"</h2>
+<div class="attributes">
+    <div class="attribute">
+        <div class="attribute-name">
+            Name
+        </div>
+
+        <div class="attribute-value">
+            {{ tag.name }}
+        </div>
+    </div>
+
+    <div class="attribute">
+        <div class="attribute-name">
+            Slug
+        </div>
+
+        <div class="attribute-value">
+            {{ tag.slug }}
+        </div>
+    </div>
+
+    <div class="attribute">
+        <div class="attribute-name">
+            Color
+        </div>
+
+        <div class="attribute-value">
+            <div class="color-box" style="background-color: #{{tag.color}}"></div>
+        </div>
+    </div>
+</div>
+
+<h3>Documents</h3>
+<div class="documents">
+{% for document in documents %}
+    {% include "documents-view.html" %}
+{% endfor %}
+</div>
+</div>
+{%  endblock page %}

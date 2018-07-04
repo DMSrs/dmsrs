@@ -91,6 +91,7 @@ fn main(){
         routes::documents::document_single,
         routes::documents::document_picture,
         routes::tags::index,
+        routes::tags::tag_single,
         css_files,
         img_files,
         fonts_files])

@@ -41,6 +41,75 @@ pub fn fetch_documents(pool : &Pool<PostgresConnectionManager>) -> Vec<Document>
     documents
 }
 
+pub fn fetch_documents_by_tag(pool : &Pool<PostgresConnectionManager>, slug: String) -> Vec<Document> {
+    let conn = pool.clone().get().unwrap();
+
+    let mut documents: Vec<Document> = Vec::new();
+    let query = conn.query("SELECT \
+        documents.id,
+        title, \
+        correspondents.id as from_id, \
+        correspondents.name as from_name, \
+        \"date\", \
+        added_on, \
+        pages, \
+        ocr_result \
+     FROM documents \
+     INNER JOIN correspondents ON correspondents.id = documents.correspondent \
+     WHERE documents.hidden = false \
+     AND documents.id IN (SELECT document_id FROM tags_documents \
+     WHERE tag_slug=$1)", &[&slug]);
+    if let Ok(rows) = query {
+        for row in rows.iter() {
+            //let src : String = row.get(0);
+            documents.push(parse_document(&row));
+        }
+
+        for doc in documents.iter_mut() {
+            doc.tags = fetch_tags_by_document(pool, &doc);
+            println!("{:?}", doc.tags);
+        }
+    } else {
+        let err = query.unwrap_err();
+        println!("Unable to fetch rows! {}", err);
+    }
+
+    documents
+}
+pub fn fetch_documents_by_correspondent(pool : &Pool<PostgresConnectionManager>, id: i32) -> Vec<Document> {
+    let conn = pool.clone().get().unwrap();
+
+    let mut documents: Vec<Document> = Vec::new();
+    let query = conn.query("SELECT \
+        documents.id,
+        title, \
+        correspondents.id as from_id, \
+        correspondents.name as from_name, \
+        \"date\", \
+        added_on, \
+        pages, \
+        ocr_result \
+     FROM documents \
+     INNER JOIN correspondents ON correspondents.id = documents.correspondent \
+     WHERE documents.hidden = false \
+     AND documents.correspondent=$1", &[&id]);
+    if let Ok(rows) = query {
+        for row in rows.iter() {
+            documents.push(parse_document(&row));
+        }
+
+        for doc in documents.iter_mut() {
+            doc.tags = fetch_tags_by_document(pool, &doc);
+            println!("{:?}", doc.tags);
+        }
+    } else {
+        let err = query.unwrap_err();
+        println!("Unable to fetch rows! {}", err);
+    }
+
+    documents
+}
+
 pub fn fetch_document(pool : &Pool<PostgresConnectionManager>, id: i32) -> Option<Document> {
     let conn = pool.clone().get().unwrap();
 
@@ -121,3 +190,4 @@ pub fn fetch_tags_by_document(pool : &Pool<PostgresConnectionManager>, doc: &Doc
 
     tags
 }
+

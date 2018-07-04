@@ -3,27 +3,7 @@
 <h2>Documents</h2>
 <div class="documents">
 {% for document in documents %}
-    <div class="document">
-        <div class="title">{{ document.title }}</div>
-        <div class="from-date-container">
-            <a href="/correspondent/{{ document.from.id }}" class="from">
-                <span> {{ document.from.name }}</span>
-            </a>
-            <div class="date">{{ document.date.format("%b %e, %Y") }}</div>
-        </div>
-        <a href="/documents/{{ document.id }}" class="picture">
-                <img src="{{ document.image.src|safe }}"/>
-        </a>
-        <div class="tags">
-            {% for tag in document.tags %}
-                <a href="/tags/{{ tag.slug }}" class="tag-link">
-                    <div class="tag"
-                         style="background-color: #{{tag.color}}"
-                    >{{ tag.name }}</div>
-                </a>
-            {% endfor %}
-        </div>
-    </div>
+    {% include "documents-view.html" %}
 {% endfor %}
 </div>
 {%  endblock page %}

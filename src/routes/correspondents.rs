@@ -9,11 +9,14 @@ use std::sync::Arc;
 use models::correspondent::Correspondent;
 use handlers::correspondenthandler::fetch_correspondent;
 use handlers::correspondenthandler::fetch_correspondents;
+use handlers::documenthandler::fetch_documents_by_correspondent;
+use models::document::Document;
 
 #[derive(Template)]
 #[template(path = "correspondent.html")]
 pub struct SingleCorrespondent<'a> {
     correspondent: Correspondent,
+    documents: Vec<Document>,
     rh: State<'a, RoutesHandler>,
     current_path: String
 }
@@ -30,8 +33,9 @@ pub struct Correspondents<'a>{
 pub fn correspondent_single<'a>(rh: State<'a, RoutesHandler>, path: State<Arc<RocketPath>>, id: i32) -> Option<SingleCorrespondent<'a>> {
     let mut current_path : String = (*(path.path.lock().unwrap())).clone();
     let correspondent = fetch_correspondent(&rh.pool, id);
+    let documents = fetch_documents_by_correspondent(&rh.pool, id);
 
-    correspondent.map(|corr| SingleCorrespondent { correspondent: corr, rh, current_path })
+    correspondent.map(|corr| SingleCorrespondent { correspondent: corr, documents, rh, current_path })
 }
 
 #[get("/correspondents")]
