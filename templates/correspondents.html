@@ -2,10 +2,14 @@
 {%  block page %}
 <h2>Correspondents</h2>
 <div class="correspondents">
+    <ul>
 {% for correspondent in correspondents %}
-    <a href="/correspondents/{{ correspondent.id }}">
-        <div class="correspondent">{{ correspondent.name }}</div>
-    </a>
+    <li class="correspondent">
+        <a href="/correspondents/{{ correspondent.id }}">
+            {{ correspondent.name }}
+        </a>
+    </li>
 {% endfor %}
+    </ul>
 </div>
 {%  endblock page %}
