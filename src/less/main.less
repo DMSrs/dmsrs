@@ -337,6 +337,7 @@ div#page > div.documents{
 @headerHeight: 50px;
 
 body {
+  display: block !important;
   padding-top: @headerHeight + 10px;
 }
 
@@ -345,9 +346,8 @@ body > header {
   display: flex;
   top: 0;
   left: 0;
-  margin: 0;
   width: 100%;
-  padding: 10px;
+  margin: 10px;
   overflow: hidden;
   height: @headerHeight;
   vertical-align: baseline;
@@ -479,3 +479,4 @@ div#page > div.single-document {
     }
   }
 }
+#loadOverlay{display: none;}
