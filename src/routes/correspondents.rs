@@ -11,6 +11,13 @@ use handlers::correspondenthandler::fetch_correspondent;
 use handlers::correspondenthandler::fetch_correspondents;
 use handlers::documenthandler::fetch_documents_by_correspondent;
 use models::document::Document;
+use std::collections::HashMap;
+use rocket::request::Form;
+use rocket::response::Redirect;
+use handlers::correspondenthandler::add_correspondent;
+use handlers::correspondenthandler::remove_correspondent;
+
+static MODULE_PATH : &str = "/correspondents";
 
 #[derive(Template)]
 #[template(path = "correspondents/single.html")]
@@ -36,10 +43,22 @@ pub struct Correspondents<'a>{
     current_path: String
 }
 
+#[derive(FromForm)]
+pub struct AddCorrespondentForm {
+    name: String
+}
+
 #[get("/correspondents/add")]
 pub fn correspondent_add<'a>(rh: State<'a, RoutesHandler>, path: State<Arc<RocketPath>>) -> AddCorrespondent<'a> {
     let mut current_path : String = (*(path.path.lock().unwrap())).clone();
     AddCorrespondent{rh, current_path}
+}
+
+#[post("/correspondents/add", data="<data>")]
+pub fn correspondent_add_post<'a>(rh: State<'a, RoutesHandler>, path: State<Arc<RocketPath>>, data: Form<AddCorrespondentForm>) -> Redirect {
+    println!("Your input: {}", data.get().name);
+    add_correspondent(&rh.pool, &(data.get().name));
+    Redirect::to(MODULE_PATH)
 }
 
 #[get("/correspondents/<id>")]
@@ -49,6 +68,12 @@ pub fn correspondent_single<'a>(rh: State<'a, RoutesHandler>, path: State<Arc<Ro
     let documents = fetch_documents_by_correspondent(&rh.pool, id);
 
     correspondent.map(|corr| SingleCorrespondent { correspondent: corr, documents, rh, current_path })
+}
+
+#[get("/correspondents/delete/<id>")]
+pub fn correspondent_delete<'a>(rh: State<'a, RoutesHandler>, path: State<Arc<RocketPath>>, id: i32) -> Redirect {
+    remove_correspondent(&rh.pool, id);
+    Redirect::to(MODULE_PATH)
 }
 
 #[get("/correspondents")]

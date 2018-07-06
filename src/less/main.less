@@ -182,6 +182,8 @@ blockquote{
 
 /* ==== DMRS Specific Style ==== */
 
+@import "colors.less";
+
 .BoxShadowHelper(@level: 1){
   & when (@level = 1) {
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
@@ -388,6 +390,47 @@ div.color-box{
   }
 }
 
+.form-fancy{
+  form{
+    display: flex;
+    flex-direction: column;
+
+    div.row {
+      display: flex;
+      flex: 1 0 auto;
+
+      label {
+        flex: 1 0 auto;
+        font-weight: bold;
+        text-align: right;
+        margin-right: 2em;
+        padding: 5px;
+      }
+
+      input[type="text"]{
+        flex: 1 0 auto;
+        border: 1px solid @inputBorderColor;
+
+        @radius: 5px;
+        padding: @radius @radius*2 @radius @radius*2;
+        border-radius: @radius @radius @radius @radius;
+      }
+
+      button {
+        display: block;
+        .button;
+        margin-top: 2em;
+        margin-left: auto;
+        margin-right: auto;
+
+        &[type=submit]{
+          background-color: @submitButtonColor;
+        }
+      }
+    }
+  }
+}
+
 .actions-content {
   div.actions-content {
     display: flex;
@@ -422,24 +465,6 @@ div.color-box{
     }
   }
 }
-
-
-/*
-    Colors
- */
-
-@mainViolet: #4a0e8e;
-
-/* Logo Colors */
-@lightBlue: #68b3d9;
-@lightViolet: #6761e6;
-@blue: #4728de;
-@violet: #8240e6;
-@darkViolet: #72418f;
-@pink: #da4ce8;
-
-@tableColor: #fcfcfc;
-@tableAltColor: #dee6ea;
 
 
 @headerHeight: 50px;
@@ -531,8 +556,8 @@ div#page > div.correspondents-page {
     }
 
     th {
-      background-color: #37474F;
-      color: #FFF;
+      background-color: @tableHeaderColor;
+      color: @white;
     }
 
     tr {
@@ -550,6 +575,10 @@ div#page > div.correspondents-page {
       }
     }
   }
+}
+
+div#page > div.correspondent-add{
+  .form-fancy
 }
 
 div#page > div.tag-page {

@@ -55,3 +55,19 @@ pub fn parse_correspondent(row: &Row) -> Correspondent {
         name: row.get(1)
     }
 }
+
+pub fn add_correspondent(pool : &Pool<PostgresConnectionManager>, name: &str) -> bool{
+    let conn = pool.clone().get().unwrap();
+    let query = conn.execute("INSERT INTO \
+    correspondents (name) VALUES ($1)", &[&name]);
+
+    query.is_ok()
+}
+
+pub fn remove_correspondent(pool: &Pool<PostgresConnectionManager>, id: i32) -> bool {
+    let conn = pool.clone().get().unwrap();
+    let query = conn.execute("DELETE FROM \
+    correspondents WHERE id=$1", &[&id]);
+
+    return query.is_ok()
+}

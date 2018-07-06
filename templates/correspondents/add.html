@@ -1,4 +1,15 @@
 {% extends "menupage.html" %}
 {%  block page %}
-<h2>Add Correspondent</h2>
+<div class="correspondent-add">
+    <h2>Add Correspondent</h2>
+    <form action="/correspondents/add" method="POST">
+        <div class="row">
+            <label for="correspondent_name">Name</label>
+            <input id="correspondent_name" name="name" type="text" autocomplete="off"/>
+        </div>
+        <div class="row">
+            <button type="submit">Add</button>
+        </div>
+    </form>
+</div>
 {%  endblock page %}

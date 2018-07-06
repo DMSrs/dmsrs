@@ -1,4 +1,4 @@
-#![feature(plugin)]
+#![feature(plugin, custom_derive)]
 #![plugin(rocket_codegen)]
 
 #[macro_use]
@@ -90,6 +90,8 @@ fn main(){
         routes::correspondents::index,
         routes::correspondents::correspondent_single,
         routes::correspondents::correspondent_add,
+        routes::correspondents::correspondent_add_post,
+        routes::correspondents::correspondent_delete,
         routes::index::index,
         routes::documents::index,
         routes::documents::document_view_single,
