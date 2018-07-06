@@ -15,6 +15,7 @@ use cairo::enums::Format::ARgb32;
 use cairo::Context;
 use std::path::Path;
 use poppler::CairoSetSize;
+use tesseract::Tesseract;
 
 pub fn fetch_documents(pool : &Pool<PostgresConnectionManager>) -> Vec<Document> {
     let conn = pool.clone().get().unwrap();
@@ -242,4 +243,12 @@ pub fn get_document_filename(pool : &Pool<PostgresConnectionManager>, id: i32) -
             String::from("unknown.pdf")
         }
     }
+}
+
+pub fn get_document_ocr(pool: &Pool<PostgresConnectionManager>, id: i32) -> String {
+    let t :Tesseract = Tesseract::new() ;
+    t.set_lang("ita");
+    t.set_image("/tmp/ocr.jpg");
+    t.recognize();
+    return String::from(t.get_text());
 }

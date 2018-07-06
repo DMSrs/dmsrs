@@ -250,6 +250,17 @@ blockquote{
   }
 }
 
+.small-button {
+  button {
+    width: 40px;
+    margin: 0px;
+
+    i.far, i.fas {
+      padding: 0;
+    }
+  }
+}
+
 .documentcontainer {
   display: flex;
   flex: 0 0 auto;
@@ -330,6 +341,12 @@ div#page > div.documents {
   .documentscontainer;
 }
 
+div.documents > div.no-documents {
+  width: 100%;
+  text-align: center;
+  padding-top: 2em;
+}
+
 div.color-box{
   display: block;
   @size: 15px;
@@ -371,6 +388,41 @@ div.color-box{
   }
 }
 
+.actions-content {
+  div.actions-content {
+    display: flex;
+    justify-content: space-evenly;
+    button {
+      .button;
+      width: 100px;
+
+      &.download {
+        background-color: #1E88E5;
+      }
+
+      &.view {
+        background-color: #5E35B1;
+      }
+
+      &.add {
+        background-color: #4CAF50;
+      }
+
+      &.edit {
+        background-color: #FB8C00;
+      }
+
+      &.delete{
+        background-color: #e53935;
+      }
+
+      i.far, i.fas{
+        padding-right: 0.5em;
+      }
+    }
+  }
+}
+
 
 /*
     Colors
@@ -385,6 +437,9 @@ div.color-box{
 @violet: #8240e6;
 @darkViolet: #72418f;
 @pink: #da4ce8;
+
+@tableColor: #fcfcfc;
+@tableAltColor: #dee6ea;
 
 
 @headerHeight: 50px;
@@ -454,6 +509,49 @@ div#page > div.tags {
   .tagscontainer
 }
 
+div#page > div.correspondents-page {
+  .actions-content;
+
+  div.actions-content{
+    justify-content: flex-start;
+  }
+
+  div.correspondents > table{
+    width: 100%;
+
+    tr > td > div.actions-content{
+      .actions-content;
+      .small-button;
+
+      justify-content: space-around;
+    }
+
+    th, td{
+      padding: 8px 8px 8px 10px;
+    }
+
+    th {
+      background-color: #37474F;
+      color: #FFF;
+    }
+
+    tr {
+      background-color: @tableColor;
+      &:nth-child(2n + 1){
+        background-color: @tableAltColor;
+      }
+    }
+
+    tr.correspondent {
+      td:nth-child(1){
+        a, a:visited {
+          color: @linkColor;
+        }
+      }
+    }
+  }
+}
+
 div#page > div.tag-page {
   div.attributes{
     .attributes;
@@ -488,35 +586,7 @@ div#page > div.single-document {
     }
 
     div.actions{
-
-      div.actions-content {
-        display: flex;
-        justify-content: space-evenly;
-        button {
-          .button;
-          width: 100px;
-
-          &.download {
-            background-color: #1E88E5;
-          }
-
-          &.view {
-            background-color: #5E35B1;
-          }
-
-          &.edit {
-            background-color: #FB8C00;
-          }
-
-          &.delete{
-            background-color: #e53935;
-          }
-
-          i.far{
-            padding-right: 0.5em;
-          }
-        }
-      }
+      .actions-content
     }
   }
 }

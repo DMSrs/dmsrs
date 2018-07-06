@@ -20,9 +20,10 @@ use rocket::http::ContentType;
 use rocket::http::hyper::mime::Mime;
 use rocket::http::Header;
 use handlers::documenthandler::get_document_filename;
+use handlers::documenthandler::get_document_ocr;
 
 #[derive(Template)]
-#[template(path = "document.html")]
+#[template(path = "documents/single.html")]
 pub struct SingleDocument<'a> {
     document: Document,
     rh: State<'a, RoutesHandler>,
@@ -30,7 +31,7 @@ pub struct SingleDocument<'a> {
 }
 
 #[derive(Template)]
-#[template(path = "documents.html")]
+#[template(path = "documents/index.html")]
 pub struct MultipleDocuments<'a>{
     documents: Vec<Document>,
     rh: State<'a, RoutesHandler>,
@@ -97,4 +98,9 @@ pub fn index<'a>(rh: State<'a, RoutesHandler>, path: State<Arc<RocketPath>>) -> 
 #[get("/documents/thumbnail/<id>")]
 pub fn document_picture(rh: State<RoutesHandler>, id: i32) -> File {
     return get_document_thumbnail(id);
+}
+
+#[get("/documents/ocr/<id>")]
+pub fn document_ocr(rh: State<RoutesHandler>, id: i32) -> String {
+    get_document_ocr(&rh.pool, id)
 }

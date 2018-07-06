@@ -13,7 +13,7 @@ use handlers::documenthandler::fetch_documents_by_correspondent;
 use models::document::Document;
 
 #[derive(Template)]
-#[template(path = "correspondent.html")]
+#[template(path = "correspondents/single.html")]
 pub struct SingleCorrespondent<'a> {
     correspondent: Correspondent,
     documents: Vec<Document>,
@@ -22,11 +22,24 @@ pub struct SingleCorrespondent<'a> {
 }
 
 #[derive(Template)]
-#[template(path = "correspondents.html")]
+#[template(path = "correspondents/add.html")]
+pub struct AddCorrespondent<'a> {
+    rh: State<'a, RoutesHandler>,
+    current_path: String
+}
+
+#[derive(Template)]
+#[template(path = "correspondents/index.html")]
 pub struct Correspondents<'a>{
     correspondents: Vec<Correspondent>,
     rh: State<'a, RoutesHandler>,
     current_path: String
+}
+
+#[get("/correspondents/add")]
+pub fn correspondent_add<'a>(rh: State<'a, RoutesHandler>, path: State<Arc<RocketPath>>) -> AddCorrespondent<'a> {
+    let mut current_path : String = (*(path.path.lock().unwrap())).clone();
+    AddCorrespondent{rh, current_path}
 }
 
 #[get("/correspondents/<id>")]

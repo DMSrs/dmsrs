@@ -13,7 +13,8 @@ pub fn fetch_correspondents(pool : &Pool<PostgresConnectionManager>) -> Vec<Corr
     let mut correspondents: Vec<Correspondent> = Vec::new();
     let query = conn.query("SELECT \
         id, name
-        FROM correspondents", &[]);
+        FROM correspondents
+        ORDER BY name", &[]);
     if let Ok(rows) = query {
         for row in rows.iter() {
             correspondents.push(parse_correspondent(&row));
