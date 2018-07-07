@@ -1,6 +1,6 @@
 {
   "name": "dmsrs",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A Document Management System, in Rust.",
   "main": "index.js",
   "dependencies": {},
@@ -11,6 +11,7 @@
     "babel-preset-env": "^1.7.0",
     "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^1.0.0",
+    "cssnano": "^4.0.0",
     "mini-css-extract-plugin": "^0.4.1",
     "node-sass": "^4.9.1",
     "postcss-loader": "^2.1.5",
@@ -27,8 +28,8 @@
     "type": "git",
     "url": "git+https://github.com/DMSrs/dmsrs.git"
   },
-  "author": "",
-  "license": "GPL-2.0-only",
+  "author": "Denys Vitali <denys@denv.it>",
+  "license": "",
   "bugs": {
     "url": "https://github.com/DMSrs/dmsrs/issues"
   },

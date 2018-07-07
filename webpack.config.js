@@ -3,10 +3,16 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
-  entry: { main: './assets/javascripts/index.js' },
+  entry: { main: './src/assets/javascripts/index.js' },
   output: {
     path: path.resolve(__dirname, 'static', 'assets'),
     filename: '[name].js'
+  },
+  resolve: {
+    extensions: ['.js', '.vue', '.json'],
+    alias: {
+      '@': path.resolve(__dirname)
+    }
   },
   module: {
     rules: [
@@ -27,6 +33,6 @@ module.exports = {
     new CleanWebpackPlugin(path.resolve(__dirname, 'static', 'assets'), {}),
     new MiniCssExtractPlugin({
       filename: 'style.css',
-    }),
+    })
   ]
 };
