@@ -11,27 +11,27 @@
 html,
 body {
   margin: 0;
-  background-color: $white;
+  background-color: $color-bg;
 }
 
 body {
   font-family: $font-primary;
-  color: $body-text-color;
+  color: $color-text;
 }
 
 a {
-  color: $link-color;
+  color: $color-blue;
   transition: color 250ms;
 
   &:hover {
-    color: mix(#000, $link-color, 10%);
+    color: mix(#000, $color-blue, 10%);
   }
 
   &:active {
-    color: mix(#000, $link-color, 20%);
+    color: mix(#000, $color-blue, 20%);
   }
 
   &:visited {
-    color: $link-visited-color;
+    color: $color-blue--light;
   }
 }

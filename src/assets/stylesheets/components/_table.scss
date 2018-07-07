@@ -10,14 +10,15 @@ table {
   }
 
   th {
-    background-color: $color-table-header;
+    background-color: $color-table--header;
     color: #fff;
   }
 
   tr {
     background-color: $color-table;
+    
     &:nth-child(2n + 1){
-      background-color: $color-table-alt;
+      background-color: $color-table--alt;
     }
   }
 

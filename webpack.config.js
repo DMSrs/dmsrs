@@ -5,7 +5,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
   entry: { main: './src/assets/javascripts/index.js' },
   output: {
-    path: path.resolve(__dirname, 'static', 'assets'),
+    path: path.resolve(__dirname, 'assets', 'contents'),
     filename: '[name].js'
   },
   resolve: {
@@ -30,7 +30,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin(path.resolve(__dirname, 'static', 'assets'), {}),
+    new CleanWebpackPlugin(path.resolve(__dirname, 'assets', 'contents'), {}),
     new MiniCssExtractPlugin({
       filename: 'style.css',
     })
