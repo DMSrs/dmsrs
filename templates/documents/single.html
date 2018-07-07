@@ -1,7 +1,7 @@
 {% extends "menupage.html" %}
 {%  block page %}
-  <div class="documents-show">
-    <h1 class="page-title">{{ document.title }}</h1>
+  <div class="documents documents--show">
+    <h1 class="heading heading--xl page-title">{{ document.title }}</h1>
     <div class="single-document">
       <div class="document">
         <div class="from-date-container">
@@ -16,7 +16,7 @@
       </div>
       <div class="right-box">
         <div class="attributes">
-          <h3>Document Attributes</h3>
+          <h3 class="heading heading--m">Document Attributes</h3>
           <div class="attribute">
             <span class="attribute-name">Title</span>
             <span class="attribute-value">{{ document.title }}</span>
@@ -59,7 +59,7 @@
         </div>
 
         <div class="actions">
-          <h4>Actions</h4>
+          <h4 class="heading heading--m">Actions</h4>
           <div class="actions-content">
             <a href="/documents/view/{{document.id}}"><button class="view"><i class="far fa-eye"></i> View</button></a>
             <a href="/documents/download/{{document.id}}"><button class="download"><i class="far fa-arrow-alt-circle-down"></i> Get</button></a>

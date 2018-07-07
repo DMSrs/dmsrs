@@ -1,0 +1,45 @@
+.document-box {
+}
+
+.document-box__title {
+  margin-bottom: rem(20px);
+}
+
+.document-box__metadata {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: rem(20px);
+}
+
+.document-box__from,
+.document-box__date {
+  white-space: nowrap;
+}
+
+.document-box__from {
+  margin-right: rem(15px);
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.document-box__date {
+  text-align: right;
+}
+
+.document-box__picture {
+  display: block;
+  margin-bottom: rem(20px);
+  @include box-shadow(2);
+  
+  > img {
+    width: 100%;
+  }
+}
+
+.document-box__tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}

@@ -1,16 +1,18 @@
 {% extends "menupage.html" %}
 {%  block page %}
-  <div class="correspondents-index">
-    <h1 class="page-title">Correspondents</h1>
+  <div class="correspondents correspondents--index">
+    <h1 class="heading heading--xl page-title">Correspondents</h1>
     <div class="actions">
-      <h4>Actions</h4>
+      <h4 class="heading heading--s">Actions</h4>
       <div class="actions-content">
-        <a href="/correspondents/add/"><button class="add"><i class="fas fa-plus-circle"></i>Add</button></a>
+        <a href="/correspondents/add/">
+          <button class="button"><i class="fas fa-plus-circle"></i>Add</button>
+        </a>
       </div>
     </div>
 
-    <h4>List</h4>
-    <div class="correspondents">
+    <h4 class="heading heading--s">List</h4>
+    <div class="correspondents-listing">
       <table>
         <tr>
           <th>Name</th>

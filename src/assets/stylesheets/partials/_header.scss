@@ -1,0 +1,38 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  justify-content: space-between;
+  
+  height: rem(110px);
+  margin: auto;
+  padding: rem(15px) rem(20px);
+}
+
+.header__nav {
+  display: flex;
+}
+
+.menu {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+}
+
+.menu__item {
+  display: flex;
+  align-items: center;
+  
+  > a {
+    padding: rem(20px);
+  }
+
+  &.is-current {
+    > a {
+      color: $color-accent;
+    }
+  }
+}

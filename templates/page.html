@@ -20,16 +20,12 @@
 
   <body>
     <header class="header">
-      <div class="container">
-        <div id="logo">
-          <a href="/">
-            <img src="/img/logo.svg"/>
-          </a>
-        </div>
-        <nav class="header__nav">
-          {% block menu %}{% endblock menu %}
-        </nav>
-      </div>
+      <a href="/" class="header__logo logo">
+        <img class="logo__img" src="/img/logo.svg"/>
+      </a>
+      <nav class="header__nav">
+        {% block menu %}{% endblock menu %}
+      </nav>
     </header>
     <main class="page-contents">
       {% block page %}{% endblock page %}

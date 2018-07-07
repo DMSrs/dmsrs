@@ -1,4 +1,4 @@
-@function em($pixels, $context: $font-size-default) {
+@function em($pixels, $context: $font-size--m) {
   @if (unitless($pixels)) {
     $pixels: $pixels * 1px;
   }
@@ -13,7 +13,7 @@
   @if (unitless($pixels)) {
       $pixels: $pixels * 1px;
   }
-  @return #{$pixels / $font-size-default}rem;
+  @return #{$pixels / $font-size--m}rem;
 }
 
 @mixin box-shadow($level) {

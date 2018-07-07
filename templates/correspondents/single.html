@@ -1,8 +1,8 @@
 {% extends "menupage.html" %}
 {%  block page %}
-  <div class="correspondents-show">
-    <h1 class="page-title">{{ correspondent.name }}</h1>
-    <h3>Documents</h3>
+  <div class="correspondents correspondents--show">
+    <h1 class="heading heading--xl page-title">{{ correspondent.name }}</h1>
+    <h3 class="heading heading--m">Documents</h3>
     <div class="documents">
       {% if documents.len() == 0 %}
         <div class="no-documents">No documents available</div>

@@ -1,0 +1,43 @@
+.tag {
+  display: inline-block;
+  position: relative;
+  align-items: center;
+  font-size: rem(14px);
+  padding: rem(10px);
+  color: currentColor;
+  z-index: 0;
+
+  &::before { 
+    content: '';
+    position: absolute;
+    top: 0;
+    left: rem(10px);
+    bottom: 0;
+    margin: auto;
+    display: inline-block;
+    width: 1.4em;
+    height: 1.4em;
+    background-color: currentColor;
+    border-radius: 1.4em;
+    font-weight: 700;
+    transform-origin: left center;
+    z-index: -1;
+    transition: width 350ms cubic-bezier(.65,.05,.36,1);
+  }
+
+  &:hover {
+    &::before {
+      width: calc(100% - #{rem(20px)});
+    }
+    
+    .tag__name {
+      color: #fff;
+    }
+  }
+}
+
+.tag__name {
+  padding: 0 calc(1.25em + #{rem(10px)});
+  color: $color-blue;
+  transition: color 300ms;
+}

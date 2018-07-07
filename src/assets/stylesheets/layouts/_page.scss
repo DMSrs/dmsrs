@@ -1,0 +1,25 @@
+.page-contents {
+  margin: auto;
+  padding: 0 rem(15px);
+  min-height: calc(100vh - #{rem(150px)});
+
+  @include mq(md) {
+    max-width: 700px;
+  }
+
+  @include mq(lg) {
+    max-width: 970px;
+  }
+
+  @include mq(xl) {
+    max-width: 1170px;
+  }
+
+  @include mq(xxl) {
+    max-width: 1820px;
+  }
+}
+
+.page-title { 
+  margin-bottom: rem(60px);
+}

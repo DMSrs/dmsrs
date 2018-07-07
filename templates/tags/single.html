@@ -1,7 +1,7 @@
 {% extends "menupage.html" %}
 {%  block page %}
-  <div class="tags-show">
-    <h1 class="page-title">Tag "{{ tag.name }}"</h1>
+  <div class="tags tags--show">
+    <h1 class="heading heading--xl page-title">Tag "{{ tag.name }}"</h1>
     <div class="attributes">
       <div class="attribute">
         <div class="attribute__name">
@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <h2>Documents</h2>
+    <h2 class="heading heading--m">Documents</h2>
     <div class="documents">
       {% for document in documents %}
         {% include "components/document-box.html" %}
