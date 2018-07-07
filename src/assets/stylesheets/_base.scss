@@ -15,6 +15,9 @@ body {
 }
 
 body {
+  display: grid;
+  grid-template-rows: 50px auto 100px;
+  grid-template-columns: auto;
   font-family: $font-primary;
   color: $color-text;
 }
