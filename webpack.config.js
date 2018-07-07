@@ -32,7 +32,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(path.resolve(__dirname, 'assets', 'contents'), {}),
     new MiniCssExtractPlugin({
-      filename: 'style.css',
+      filename: 'main.css',
     })
   ]
 };
