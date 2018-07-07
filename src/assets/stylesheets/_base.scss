@@ -1,0 +1,42 @@
+*,
+*::before,
+*::after {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background-color: $white;
+}
+
+body {
+  font-family: $font-primary;
+  color: $body-text-color;
+}
+
+a {
+  color: $link-color;
+  transition: color 250ms;
+
+  &:hover {
+    color: mix(#000, $link-color, 10%);
+  }
+
+  &:active {
+    color: mix(#000, $link-color, 20%);
+  }
+
+  &:visited {
+    color: $link-visited-color;
+  }
+}
+
+
+small{
+  font-size: 0.4em;
+}

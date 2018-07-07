@@ -5,15 +5,19 @@
         <link rel="stylesheet" type="text/css" href="/assets/main.css"/>
     </head>
 
-    <body style="display: none">
-        <header>
-            <div id="logo">
-                <a href="/"><img src="/img/logo.svg"/></a>
+    <body>
+        <header class="header">
+            <div class="container">
+                <div id="logo">
+                    <a href="/">
+                        <img src="/img/logo.svg"/>
+                    </a>
+                </div>
+                <nav class="header__nav">
+                    {% block menu %}
+                    {% endblock menu %}
+                </nav>
             </div>
-            <menu>
-                {% block menu %}
-                {% endblock menu %}
-            </menu>
         </header>
         <div id="page">
             {% block page %}

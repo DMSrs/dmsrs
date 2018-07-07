@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@fortawesome/fontawesome-free@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.1.0.tgz#f35f5ba91366b7a58b0b6a4f22ff0907fe002219"
+
 "@webassemblyjs/ast@1.5.13":
   version "1.5.13"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.5.13.tgz#81155a570bd5803a30ec31436bc2c9c0ede38f25"
@@ -3175,6 +3179,10 @@ normalize-url@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/normalize-url/-/normalize-url-3.1.0.tgz#c3cbb2b09fbf1485e92935d603d9ee7156c61937"
 
+normalize.css@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-8.0.0.tgz#14ac5e461612538a4ce9be90a7da23f86e718493"
+
 npm-bundled@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/npm-bundled/-/npm-bundled-1.0.3.tgz#7e71703d973af3370a9591bafe3a63aca0be2308"
@@ -4141,6 +4149,10 @@ sass-loader@^7.0.3:
     lodash.tail "^4.1.1"
     neo-async "^2.5.0"
     pify "^3.0.0"
+
+sass-mq@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/sass-mq/-/sass-mq-5.0.0.tgz#7e8a8eb0f289591b3521549266f0ff923772809d"
 
 sax@^1.2.4, sax@~1.2.4:
   version "1.2.4"

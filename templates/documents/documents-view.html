@@ -1,0 +1,23 @@
+<div class="document">
+    <div class="document__title">
+        {{ document.title }}
+    </div>
+    <div class="document__metadata">
+        <a href="/correspondents/{{ document.from.id }}" class="document__from-name">
+            <span>{{ document.from.name }}</span>
+        </a>
+        <div class="document__date">{{ document.date.format("%b %e, %Y") }}</div>
+    </div>
+    <a href="/documents/{{ document.id }}" class="document__picture">
+        <img src="{{ document.image.src|safe }}"/>
+    </a>
+    <div class="document__tags">
+        {% for tag in document.tags %}
+            <a href="/tags/{{ tag.slug }}" class="tag-link">
+                <div class="tag" style="background-color: #{{tag.color}}">
+                    {{ tag.name }}
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+</div>

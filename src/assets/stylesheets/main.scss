@@ -1,3 +1,10 @@
-body {
-  background-color: red;
-}
+@import '~sass-mq/mq';
+@import '~normalize.css/normalize.css';
+@import 'fa/fontawesome.scss';
+$fa-font-path: '../fontawesome';
+
+@import 'variables';
+@import 'colors';
+@import 'mixins';
+@import 'grid';
+@import 'base';

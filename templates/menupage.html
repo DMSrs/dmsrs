@@ -1,18 +1,18 @@
 {% extends "page.html" %}
 {%  block menu %}
-<ul>
-    {##
-    {% //let m_data : String = *(rh.current_page.lock().unwrap()) %}
-    ##}
-    {% for me in rh.menu %}
-        {% if current_path.starts_with(me.href.as_str()) && me.href != "/" ||
-            current_path == "/" && me.href == "/" %}
-        <li class="current">
-        {% else %}
-        <li>
-        {% endif %}
-            <a href="{{me.href}}">{{me.name}}</a>
-        </li>
-    {% endfor %}
-</ul>
+    <ul class="menu">
+        {##
+        {% //let m_data : String = *(rh.current_page.lock().unwrap()) %}
+        ##}
+        {% for me in rh.menu %}
+            {% if current_path.starts_with(me.href.as_str()) && me.href != "/" ||
+                current_path == "/" && me.href == "/" %}
+            <li class="menu__item is-current">
+            {% else %}
+            <li class="menu__item">
+            {% endif %}
+                <a href="{{me.href}}">{{me.name}}</a>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock menu %}
