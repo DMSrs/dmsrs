@@ -110,5 +110,5 @@ fn main(){
 
 #[get("/assets/<file..>")]
 fn assets_files(file: PathBuf) -> Option<NamedFile> {
-    NamedFile::open(Path::new("static/assets/").join(file)).ok()
+    NamedFile::open(Path::new("assets/").join(file)).ok()
 }
