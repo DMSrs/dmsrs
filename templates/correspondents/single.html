@@ -1,16 +1,16 @@
 {% extends "menupage.html" %}
 {%  block page %}
-<div class="correspondent-page">
-<h2>{{ correspondent.name }}</h2>
-<h3>Documents</h3>
-<div class="documents">
-{% if documents.len() == 0 %}
-    <div class="no-documents">No documents available</div>
-{% else %}
-    {% for document in documents %}
-        {% include "components/document-box.html" %}
-    {% endfor %}
-{% endif %}
-</div>
-</div>
+  <div class="correspondents-show">
+    <h1 class="page-title">{{ correspondent.name }}</h1>
+    <h3>Documents</h3>
+    <div class="documents">
+      {% if documents.len() == 0 %}
+        <div class="no-documents">No documents available</div>
+      {% else %}
+        {% for document in documents %}
+            {% include "components/document-box.html" %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
 {%  endblock page %}

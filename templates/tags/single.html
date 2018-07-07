@@ -1,44 +1,44 @@
 {% extends "menupage.html" %}
 {%  block page %}
-<div class="tag-page">
-    <h1>Tag "{{ tag.name }}"</h1>
+  <div class="tags-show">
+    <h1 class="page-title">Tag "{{ tag.name }}"</h1>
     <div class="attributes">
-        <div class="attribute">
-            <div class="attribute__name">
-                Name
-            </div>
-
-            <div class="attribute__value">
-                {{ tag.name }}
-            </div>
+      <div class="attribute">
+        <div class="attribute__name">
+          Name
         </div>
 
-        <div class="attribute">
-            <div class="attribute__name">
-                Slug
-            </div>
+        <div class="attribute__value">
+          {{ tag.name }}
+        </div>
+      </div>
 
-            <div class="attribute__value">
-                {{ tag.slug }}
-            </div>
+      <div class="attribute">
+        <div class="attribute__name">
+          Slug
         </div>
 
-        <div class="attribute">
-            <div class="attribute__name">
-                Color
-            </div>
-
-            <div class="attribute__value">
-                <div class="color-box" style="background-color: #{{tag.color}}"></div>
-            </div>
+        <div class="attribute__value">
+          {{ tag.slug }}
         </div>
+      </div>
+
+      <div class="attribute">
+        <div class="attribute__name">
+          Color
+        </div>
+
+        <div class="attribute__value">
+          <div class="color-box" style="background-color: #{{tag.color}}"></div>
+        </div>
+      </div>
     </div>
 
     <h2>Documents</h2>
     <div class="documents">
-        {% for document in documents %}
-            {% include "components/document-box.html" %}
-        {% endfor %}
+      {% for document in documents %}
+        {% include "components/document-box.html" %}
+      {% endfor %}
     </div>
-</div>
+  </div>
 {%  endblock page %}

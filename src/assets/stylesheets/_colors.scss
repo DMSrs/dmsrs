@@ -1,35 +1,31 @@
 
-$white: #FFF;
+$color-bg: #fefefe;
+$color-text: #454545;
 
-$main-violet: #4a0e8e;
+$color-accent: #4a0e8e;
 
 /* Logo Colors */
-$light-blue: #68b3d9;
-$light-violet: #6761e6;
-$blue: #4728de;
-$violet: #8240e6;
-$dark-violet: #72418f;
-$pink: #da4ce8;
+$color-blue: #4728de;
+$color-blue--light: #68b3d9;
 
-$table-color: #fcfcfc;
-$table-alt-color: #dee6ea;
-$table-header-color: #37474F;
+$color-violet: #8240e6;
+$color-violet--light: #6761e6;
+$color-violet--dark: #72418f;
 
-$input-border-color: #CCC;
-$submit-button-color: $blue;
+$color-pink: #da4ce8;
 
-$body-bg-color: #fefefe;
-$body-text-color: #454545;
 
-// Link Colors
-$link-color: #07A;
-$link-visited-color: #941352;
-$link-visited-inverted-color: #ac5a82;
-// ===============
+$color-buttons: #90A4AE;
+$color-table: #fcfcfc;
+$color-table--alt: #dee6ea;
+$color-table--header: #37474F;
 
-$wrong-color: #c0392b;
-$shitty-blue: #0000EE;
-$shitty-violet: #551A8B;
-$motherfucking-color: #16a085;
-$blockquote-color: #456;
-$openquote-color: #666;
+$color-input-border: #CCC;
+$color-submit-button: $blue;
+
+// $color-wrong: #c0392b;
+// $shitty-blue: #0000EE;
+// $shitty-violet: #551A8B;
+// $color-motherfucking: #16a085;
+// $color-blockquote: #456;
+// $color-openquote: #666;

@@ -6,5 +6,9 @@ $fa-font-path: '../fontawesome';
 @import 'variables';
 @import 'colors';
 @import 'mixins';
-@import 'grid';
+// @import 'grid';
 @import 'base';
+
+@import 'components/button';
+@import 'components/form';
+@import 'components/table';
