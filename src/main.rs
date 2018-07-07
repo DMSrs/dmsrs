@@ -103,9 +103,7 @@ fn main(){
         routes::tags::tag_single,
         css_files,
         img_files,
-        assets_files,
-        fonts_files,
-        contents_files])
+        assets_files])
         .attach(Template::fairing())
         .launch();
 }
@@ -113,14 +111,4 @@ fn main(){
 #[get("/assets/<file..>")]
 fn assets_files(file: PathBuf) -> Option<NamedFile> {
     NamedFile::open(Path::new("static/assets/").join(file)).ok()
-}
-
-#[get("/assets/fonts/<file..>")]
-fn fonts_files(file: PathBuf) -> Option<NamedFile> {
-    NamedFile::open(Path::new("static/assets/fonts").join(file)).ok()
-}
-
-#[get("/assets/contents/<file..>")]
-fn contents_files(file: PathBuf) -> Option<NamedFile> {
-    NamedFile::open(Path::new("static/assets/contents").join(file)).ok()
 }
