@@ -8,7 +8,7 @@
     <div class="no-documents">No documents available</div>
 {% else %}
     {% for document in documents %}
-    {% include "documents-view.html" %}
+        {% include "components/document-box.html" %}
     {% endfor %}
 {% endif %}
 </div>
