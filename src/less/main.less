@@ -265,10 +265,11 @@ blockquote{
 
 .documentcontainer {
   display: flex;
-  flex: 0 0 auto;
+  flex: 0 1 auto;
   flex-direction: column;
-  align-items: center;
+  justify-content: space-evenly;
   width: auto;
+  margin-left: 20px;
 
   @margin: 50px;
   margin-bottom: @margin;
@@ -331,7 +332,7 @@ blockquote{
   flex-wrap: wrap;
   align-items: stretch;
   align-content: flex-start;
-  justify-content: space-between;
+  justify-content: space-evenly;
   margin-top: 2em;
 
   div.document{
@@ -620,3 +621,7 @@ div#page > div.single-document {
   }
 }
 #loadOverlay{display: none;}
+
+body {
+  max-width: 85vw;
+}
