@@ -11,7 +11,7 @@ use handlers::taghandler::fetch_tag;
 use handlers::documenthandler::fetch_documents_by_tag;
 
 #[derive(Template)]
-#[template(path = "tags.html")]
+#[template(path = "tags/index.html")]
 pub struct Tags<'a> {
     tags: Vec<Tag>,
     rh: State<'a, RoutesHandler>,
@@ -19,7 +19,7 @@ pub struct Tags<'a> {
 }
 
 #[derive(Template)]
-#[template(path = "tag.html")]
+#[template(path = "tags/single.html")]
 pub struct SingleTag<'a> {
     tag: Tag,
     documents: Vec<Document>,
