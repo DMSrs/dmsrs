@@ -1,0 +1,28 @@
+.heading { 
+  font-weight: 700;
+  color: mix(#000, $color-accent, 50%);
+}
+
+.heading--xxl {
+  font-size: rem(44px);
+}
+
+.heading--xl {
+  font-size: rem(36px);
+}
+
+.heading--l {
+  font-size: rem(32px);
+}
+
+.heading--m {
+  font-size: rem(28px);
+}
+
+.heading--s {
+  font-size: rem(22px);
+}
+
+.heading--xs {
+  font-size: rem(18px);
+}

@@ -1,0 +1,21 @@
+<div class="document-box">
+  <h3 class="heading heading--m document-box__title">
+    {{ document.title }}
+  </h3>
+  <div class="document-box__metadata">
+    <a href="/correspondents/{{ document.from.id }}" class="document-box__from">
+      <span>{{ document.from.name }}</span>
+    </a>
+    <div class="document-box__date">
+      {{ document.date.format("%b %e, %Y") }}
+    </div>
+  </div>
+  <a href="/documents/{{ document.id }}" class="document-box__picture">
+    <img src="{{ document.image.src|safe }}"/>
+  </a>
+  <div class="document-box__tags">
+    {% for tag in document.tags %}
+      {% include "components/tag.html" %}
+    {% endfor %}
+  </div>
+</div>

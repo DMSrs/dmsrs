@@ -1,0 +1,19 @@
+.listing {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: rem(60px) rem(30px);
+  align-items: start;
+  margin-bottom: rem(80px);
+
+  > * {
+    min-width: 0;
+  }
+  
+  @include mq(md) {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  @include mq(xxl) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}

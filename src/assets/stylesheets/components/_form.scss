@@ -1,0 +1,20 @@
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form__group {
+  display: flex;
+}
+
+.form__label {
+  margin-right: 30px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.form__input{
+  border: 1px solid $color-input-border;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
