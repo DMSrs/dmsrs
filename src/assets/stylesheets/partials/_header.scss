@@ -11,6 +11,7 @@
   height: rem($navbar-height);
   margin: auto;
   padding: rem($navbar-leftPadding) rem($navbar-topPadding);
+  background-color: rgba($white, .95);
 }
 
 .header__nav {

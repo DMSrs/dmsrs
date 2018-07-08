@@ -54,3 +54,7 @@ $heading-xxl  : calc(1.22   *   #{$heading-xl});*/
   margin-top: $heading-xs;
   margin-bottom: $heading-xs;
 }
+
+.heading--no-margin-top{
+  margin-top: 0;
+}

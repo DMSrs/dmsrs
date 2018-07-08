@@ -2,6 +2,7 @@
   margin: auto;
   padding: 0 rem(15px);
   min-height: calc(100vh - #{rem(150px)});
+  padding-bottom: rem(40px);
 
   @include mq(md) {
     max-width: 700px;

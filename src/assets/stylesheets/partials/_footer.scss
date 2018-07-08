@@ -3,7 +3,8 @@
   align-items: flex-end;
   justify-content: flex-end;
   height: rem(40px);
-  padding: rem(16px) rem(20px);
+  overflow: hidden;
+  padding: rem(12px) rem(20px);
   font-size: rem(12px);
   line-height: 1;
   background-color: $color-accent;

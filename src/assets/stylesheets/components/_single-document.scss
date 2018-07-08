@@ -1,0 +1,53 @@
+.single-document {
+    display: flex;
+    justify-content: space-around;
+
+    overflow: hidden;
+
+    .single-document__document{
+        width: 50%;
+        flex: 1 0 auto;
+        margin: 0 rem(50px) 0 rem(50px);
+
+        .document__from-date-container{
+            display: flex;
+            justify-content: space-between;
+            margin: 0 rem(10px) 0 rem(10px);
+
+            .document__from-date-container__from {
+                flex: 0 0 auto;
+            }
+        }
+
+        .document__picture{
+            display: block;
+            margin-top: rem(10px);
+            img {
+                @include box-shadow(1);
+            }
+        }
+    }
+
+    .single-document__right-box {
+        width: 50%;
+        flex: 1 0 auto;
+
+        .right-box__attributes{
+            .attributes_attribute{
+                display: flex;
+                justify-content: flex-start;
+                margin-top: rem(5px);
+                .attribute__name{
+                    flex: 0 0 auto;
+                    min-width: 25%;
+                    margin-right: rem(10px);
+                }
+
+                .attribute__value{
+                    flex: 1 1 auto;
+                    max-width: 80%;
+                }
+            }
+        }
+    }
+}
