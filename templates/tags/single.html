@@ -36,9 +36,11 @@
 
     <h2 class="heading heading--m">Documents</h2>
     <div class="documents">
+      <div class="listing listing--documents">
       {% for document in documents %}
         {% include "components/document-box.html" %}
       {% endfor %}
+      </div>
     </div>
   </div>
 {%  endblock page %}

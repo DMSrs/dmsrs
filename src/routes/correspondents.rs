@@ -56,7 +56,7 @@ pub fn correspondent_add<'a>(rh: State<'a, RoutesHandler>, path: State<Arc<Rocke
 
 #[post("/correspondents/add", data="<data>")]
 pub fn correspondent_add_post<'a>(rh: State<'a, RoutesHandler>, path: State<Arc<RocketPath>>, data: Form<AddCorrespondentForm>) -> Redirect {
-    println!("Your input: {}", data.get().name);
+    println!("Adding: {}", data.get().name);
     add_correspondent(&rh.pool, &(data.get().name));
     Redirect::to(MODULE_PATH)
 }
