@@ -11,7 +11,7 @@ table {
 
   th {
     background-color: $color-table--header;
-    color: #fff;
+    color: $white;
   }
 
   tr {
@@ -21,9 +21,15 @@ table {
       background-color: $color-table--alt;
     }
   }
+}
 
-  // tr.correspondent {
-  //   td:nth-child(1){
-  //   }
-  // }
+table.correspondents-table {
+  tr> td:nth-child(2), tr > th:nth-child(2) {
+    width: rem(200px);
+  }
+
+  tr > td:nth-child(2) {
+    display: flex;
+    justify-content: center;
+  }
 }

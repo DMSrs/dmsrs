@@ -6,10 +6,11 @@
 
   display: flex;
   justify-content: space-between;
+  align-items: center;
   
-  height: rem(110px);
+  height: rem($navbar-height);
   margin: auto;
-  padding: rem(15px) rem(20px);
+  padding: rem($navbar-leftPadding) rem($navbar-topPadding);
 }
 
 .header__nav {
@@ -27,12 +28,13 @@
   align-items: center;
   
   > a {
+    color: $navbar-menu-item--inactive;
     padding: rem(20px);
   }
 
   &.is-current {
     > a {
-      color: $color-accent;
+      color: $navbar-menu-item--active;
     }
   }
 }

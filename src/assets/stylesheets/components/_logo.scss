@@ -1,8 +1,8 @@
 .logo {
   display: inline-block;
+  height: rem($navbar-height - $navbar-topPadding*2);
 }
 
 .logo__img {
-  width: rem(173px);
-  height: rem(70px);
+  height: 100%;
 }

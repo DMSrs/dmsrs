@@ -8,6 +8,8 @@
   padding: 3px 5px 3px 5px;
   border-radius: 5px;
   width: 80px;
+
+  margin: 5px 5px 5px;
   min-height: 30px;
 
   white-space: nowrap;
@@ -17,20 +19,20 @@
   background-color: $color-buttons;
   cursor: pointer;
 
-  @include box-shadow(1);
-
-  &:hover {
-    @include box-shadow(2);
-  }
+  @include box-shadow(2);
 
   &:active {
-    @include box-shadow(3);
+    @include box-shadow(1);
   }
 
   > span {
     display: block;
     font-size: inherit;
     line-height: inherit;
+  }
+
+  i.far, i.fas {
+    padding-right: rem(5px);
   }
 }
 

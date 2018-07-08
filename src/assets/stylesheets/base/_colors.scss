@@ -1,5 +1,6 @@
+$white: #fefefe;
 
-$color-bg: #fefefe;
+$color-bg: $white;
 $color-text: #454545;
 
 $color-accent: #4a0e8e;
@@ -14,7 +15,6 @@ $color-violet--dark: #72418f;
 
 $color-pink: #da4ce8;
 
-
 $color-buttons: #90A4AE;
 $color-table: #fcfcfc;
 $color-table--alt: #dee6ea;
@@ -23,6 +23,12 @@ $color-table--header: #37474F;
 $color-input-border: #CCC;
 $color-submit-button: $color-blue;
 
+// Link Colors
+$color-link: #07A;
+$color-link--visited: #941352;
+
+$navbar-menu-item--active: $color-blue;
+$navbar-menu-item--inactive: $color-text;
 // $color-wrong: #c0392b;
 // $shitty-blue: #0000EE;
 // $shitty-violet: #551A8B;

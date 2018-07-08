@@ -3,26 +3,54 @@
   color: mix(#000, $color-accent, 50%);
 }
 
+$orig_heading: rem(16px);
+
+$heading-xs     : $orig_heading;
+$heading-ratio  : 1.14; 
+$heading-s      : calc(#{$heading-ratio} * #{$heading-xs});
+$heading-m      : calc(#{$heading-ratio} * #{$heading-s});
+$heading-l      : calc(#{$heading-ratio} * #{$heading-m});
+$heading-xl     : calc(#{$heading-ratio} * #{$heading-l});
+$heading-xxl    : calc(#{$heading-ratio} * #{$heading-xl});
+
+/*$heading-xs   : $orig_heading;
+$heading-s    : calc(1.2    *   #{$heading-xs});
+$heading-m    : calc(1.27   *   #{$heading-s});
+$heading-l    : calc(1.14   *   #{$heading-m});
+$heading-xl   : calc(1.125  *   #{$heading-l});
+$heading-xxl  : calc(1.22   *   #{$heading-xl});*/
+
 .heading--xxl {
-  font-size: rem(44px);
+  font-size: $heading-xxl;
+  margin-bottom: $heading-xxl;
 }
 
 .heading--xl {
-  font-size: rem(36px);
+  font-size: $heading-xl;
+  margin-top: $heading-xl;
+  margin-bottom: $heading-xl;
 }
 
 .heading--l {
-  font-size: rem(32px);
+  font-size: $heading-l;
+  margin-top: $heading-l;
+  margin-bottom: $heading-l;
 }
 
 .heading--m {
-  font-size: rem(28px);
+  font-size: $heading-m;
+  margin-top: $heading-m;
+  margin-bottom: $heading-m;
 }
 
 .heading--s {
-  font-size: rem(22px);
+  font-size: $heading-s;
+  margin-top: $heading-s;
+  margin-bottom: $heading-s;
 }
 
 .heading--xs {
-  font-size: rem(18px);
+  font-size: $heading-xs;
+  margin-top: $heading-xs;
+  margin-bottom: $heading-xs;
 }

@@ -36,16 +36,16 @@ img {
 }
 
 a {
-  color: $color-blue;
+  color: $color-link;
   text-decoration: none;
   transition: color 250ms;
 
   &:hover {
-    color: $color-violet--light; 
+    color: $color-link; 
   }
 
   &:active {
-    color: mix(#fff, $color-blue--light, 20%);
+    color: mix(#fff, $color-link--visited, 20%);
   }
 
   // &:visited {
