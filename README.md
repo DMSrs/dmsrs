@@ -4,6 +4,19 @@
 # DMS.rs
 A Document Management System, written in Rust
 
+## Requirements
+- Rust Nightly
+- Webpack
+- Yarn
+- libtesseract
+
+## Instructions
+```
+yarn
+webpack
+cargo run
+```
+
 ## Screenshots 
 
 ### Documents view
