@@ -2,14 +2,16 @@
 {%  block page %}
   <div class="correspondents correspondents--show">
     <h1 class="heading heading--xl page-title">{{ correspondent.name }}</h1>
-    <h3 class="heading heading--m">Documents</h3>
+    <h2 class="heading heading--l">Documents</h2>
     <div class="documents">
       {% if documents.len() == 0 %}
         <div class="no-documents">No documents available</div>
       {% else %}
+      <div class="listing listing--documents">
         {% for document in documents %}
             {% include "components/document-box.html" %}
         {% endfor %}
+      </div>
       {% endif %}
     </div>
   </div>
