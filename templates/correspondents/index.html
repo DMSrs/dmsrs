@@ -1,34 +1,36 @@
 {% extends "menupage.html" %}
 {%  block page %}
-<div class="correspondents-page">
-<h2>Correspondents</h2>
-<div class="actions">
-    <h4>Actions</h4>
-    <div class="actions-content">
-        <a href="/correspondents/add/"><button class="add"><i class="fas fa-plus-circle"></i>Add</button></a>
+  <div class="correspondents correspondents--index">
+    <h1 class="heading heading--xl page-title">Correspondents</h1>
+    <div class="actions">
+      <h4 class="heading heading--s">Actions</h4>
+      <div class="actions-content">
+        <a href="/correspondents/add/">
+          <button class="button"><i class="fas fa-plus-circle"></i>Add</button>
+        </a>
+      </div>
     </div>
-</div>
 
-<h4>List</h4>
-<div class="correspondents">
-    <table>
+    <h4 class="heading heading--s">List</h4>
+    <div class="correspondents-listing">
+      <table>
         <tr>
-            <th>Name</th>
-            <th>Actions</th>
+          <th>Name</th>
+          <th>Actions</th>
         </tr>
         {% for correspondent in correspondents %}
-            <tr class="correspondent">
-                <td><a href="/correspondents/{{correspondent.id }}">{{ correspondent.name }}</a></td>
-                <td>
-                    <div class="actions-content">
-                        <a href="/correspondents/{{correspondent.id}}"><button class="view" alt="View"><i class="fas fa-eye"></i></button></a>
-                        <a href="/correspondents/edit/{{correspondent.id}}"><button class="edit" alt="Edit"><i class="fas fa-pen"></i></button></a>
-                        <a href="/correspondents/delete/{{correspondent.id}}"><button class="delete" alt="Delete"><i class="fas fa-trash-alt"></i></button></a>
-                    </div>
-                </td>
-            </tr>
+          <tr class="correspondent">
+            <td><a href="/correspondents/{{correspondent.id }}">{{ correspondent.name }}</a></td>
+            <td>
+              <div class="actions-content">
+                <a href ="/correspondents/{{correspondent.id}}"><button class="view" alt="View"><i class="fas fa-eye"></i></button></a>
+                <a href="/correspondents/edit/{{correspondent.id}}"><button class="edit" alt="Edit"><i class="fas fa-pen"></i></button></a>
+                <a href="/correspondents/delete/{{correspondent.id}}"><button class="delete" alt="Delete"><i class="fas fa-trash-alt"></i></button></a>
+              </div>
+            </td>
+          </tr>
         {% endfor %}
-    </table>
-</div>
-</div>
+      </table>
+    </div>
+  </div>
 {%  endblock page %}

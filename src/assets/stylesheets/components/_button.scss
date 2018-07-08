@@ -1,0 +1,67 @@
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  border: none;
+  padding: 3px 5px 3px 5px;
+  border-radius: 5px;
+  width: 80px;
+  min-height: 30px;
+
+  white-space: nowrap;
+  text-decoration: none;
+
+  color: $color-bg;
+  background-color: $color-buttons;
+  cursor: pointer;
+
+  @include box-shadow(1);
+
+  &:hover {
+    @include box-shadow(2);
+  }
+
+  &:active {
+    @include box-shadow(3);
+  }
+
+  > span {
+    display: block;
+    font-size: inherit;
+    line-height: inherit;
+  }
+}
+
+.button--small {
+  width: 40px;
+
+  i.far, i.fas {
+    padding: 0;
+  }
+}
+
+.button--submit {
+  background-color: $color-blue;
+}
+
+.button--download {
+  background-color: #1E88E5;
+}
+
+.button--view {
+  background-color: #5E35B1;
+}
+
+.button--add {
+  background-color: #4CAF50;
+}
+
+.button--edit {
+  background-color: #FB8C00;
+}
+
+.button--delete{
+  background-color: #e53935;
+}

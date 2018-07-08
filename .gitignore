@@ -2,5 +2,5 @@
 **/*.rs.bk
 .idea
 node_modules/
-static/css/
+assets/contents/*
 data/
