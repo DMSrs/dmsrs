@@ -1,4 +1,5 @@
 $tag-size: 25px;
+$tag-width: 100px;
 
 .tag {
 
@@ -9,6 +10,7 @@ $tag-size: 25px;
   padding: rem(10px);
   color: currentColor;
   height: calc(#{$tag-size} + 1em);
+  width: $tag-width + $tag-size;
   z-index: 0;
 
   &::before { 
