@@ -1,6 +1,5 @@
 use rocket::State;
 use routes::RoutesHandler;
-use std::fs::File;
 use models::tag::Tag;
 use handlers::taghandler::fetch_tags;
 use askama::Template;
@@ -27,6 +26,13 @@ pub struct SingleTag<'a> {
     current_path: String
 }
 
+#[derive(Template)]
+#[template(path = "tags/add.html")]
+pub struct AddTag<'a> {
+    rh: State<'a, RoutesHandler>,
+    current_path: String
+}
+
 
 #[get("/tags")]
 pub fn index<'a>(rh: State<'a, RoutesHandler>, path: State<Arc<RocketPath>>) -> Tags<'a> {
@@ -35,9 +41,15 @@ pub fn index<'a>(rh: State<'a, RoutesHandler>, path: State<Arc<RocketPath>>) -> 
     Tags { tags , rh, current_path }
 }
 
+#[get("/tags/add")]
+pub fn add<'a>(rh: State<'a, RoutesHandler>, path: State<Arc<RocketPath>>) -> AddTag<'a> {
+    let current_path : String = (*(path.path.lock().unwrap())).clone();
+    AddTag {  rh, current_path }
+}
+
 #[get("/tags/<slug>")]
 pub fn tag_single<'a>(rh: State<'a, RoutesHandler>, path: State<Arc<RocketPath>>, slug: String) -> Option<SingleTag<'a>> {
-    let mut current_path : String = (*(path.path.lock().unwrap())).clone();
+    let current_path : String = (*(path.path.lock().unwrap())).clone();
     let tag = fetch_tag(&rh.pool, slug.clone());
     return match tag {
         Some(t) => {

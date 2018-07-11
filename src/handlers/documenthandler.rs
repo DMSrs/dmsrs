@@ -14,25 +14,31 @@ use cairo::ImageSurface;
 use cairo::enums::Format::ARgb32;
 use cairo::Context;
 use std::path::Path;
-use poppler::CairoSetSize;
-use tesseract::Tesseract;
+use r2d2::PooledConnection;
+
+static BASE_QUERY : &'static str = r#"SELECT 
+		documents.id,
+		title, 
+		correspondents.id as from_id, 
+		correspondents.name as from_name, 
+		"date", 
+		added_on, 
+		(SELECT COUNT(*) FROM pages WHERE document_id = documents.id) as pages,
+		 sha256sum
+ FROM documents 
+ INNER JOIN correspondents ON correspondents.id = documents.correspondent 
+ WHERE documents.hidden = false"#;
+
+fn get_conn(pool: &Pool<PostgresConnectionManager>) -> PooledConnection<PostgresConnectionManager> {
+    pool.get().unwrap()
+}
 
 pub fn fetch_documents(pool : &Pool<PostgresConnectionManager>) -> Vec<Document> {
-    let conn = pool.clone().get().unwrap();
+    let conn = get_conn(&pool);
+    let query = conn.query(BASE_QUERY, &[]);
 
     let mut documents: Vec<Document> = Vec::new();
-    let query = conn.query("SELECT \
-        documents.id,
-        title, \
-        correspondents.id as from_id, \
-        correspondents.name as from_name, \
-        \"date\", \
-        added_on, \
-        pages, \
-        ocr_result \
-     FROM documents \
-     INNER JOIN correspondents ON correspondents.id = documents.correspondent \
-     WHERE documents.hidden = false", &[]);
+    
     if let Ok(rows) = query {
         for row in rows.iter() {
             //let src : String = row.get(0);
@@ -55,23 +61,11 @@ pub fn fetch_documents_by_tag(pool : &Pool<PostgresConnectionManager>, slug: Str
     let conn = pool.clone().get().unwrap();
 
     let mut documents: Vec<Document> = Vec::new();
-    let query = conn.query("SELECT \
-        documents.id,
-        title, \
-        correspondents.id as from_id, \
-        correspondents.name as from_name, \
-        \"date\", \
-        added_on, \
-        pages, \
-        ocr_result \
-     FROM documents \
-     INNER JOIN correspondents ON correspondents.id = documents.correspondent \
-     WHERE documents.hidden = false \
-     AND documents.id IN (SELECT document_id FROM tags_documents \
-     WHERE tag_slug=$1)", &[&slug]);
+    let query = conn.query(&format!(
+        "{} AND documents.id IN (SELECT document_id FROM tags_documents WHERE tag_slug=$1)", BASE_QUERY),
+        &[&slug]);
     if let Ok(rows) = query {
         for row in rows.iter() {
-            //let src : String = row.get(0);
             documents.push(parse_document(&row));
         }
 
@@ -87,22 +81,12 @@ pub fn fetch_documents_by_tag(pool : &Pool<PostgresConnectionManager>, slug: Str
     documents
 }
 pub fn fetch_documents_by_correspondent(pool : &Pool<PostgresConnectionManager>, id: i32) -> Vec<Document> {
-    let conn = pool.clone().get().unwrap();
+    let conn = get_conn(&pool);
 
     let mut documents: Vec<Document> = Vec::new();
-    let query = conn.query("SELECT \
-        documents.id,
-        title, \
-        correspondents.id as from_id, \
-        correspondents.name as from_name, \
-        \"date\", \
-        added_on, \
-        pages, \
-        ocr_result \
-     FROM documents \
-     INNER JOIN correspondents ON correspondents.id = documents.correspondent \
-     WHERE documents.hidden = false \
-     AND documents.correspondent=$1", &[&id]);
+    let query = conn.query(&format!(
+        "{} AND documents.correspondent=$1", BASE_QUERY),
+        &[&id]);
     if let Ok(rows) = query {
         for row in rows.iter() {
             documents.push(parse_document(&row));
@@ -121,28 +105,18 @@ pub fn fetch_documents_by_correspondent(pool : &Pool<PostgresConnectionManager>,
 }
 
 pub fn fetch_document(pool : &Pool<PostgresConnectionManager>, id: i32) -> Option<Document> {
-    let conn = pool.clone().get().unwrap();
+    let conn = get_conn(&pool);
 
     let mut documents: Vec<Document> = Vec::new();
-    let query = conn.query("SELECT \
-        documents.id,
-        title, \
-        correspondents.id as from_id, \
-        correspondents.name as from_name, \
-        \"date\", \
-        added_on, \
-        pages, \
-        ocr_result \
-     FROM documents \
-     INNER JOIN correspondents ON correspondents.id = documents.correspondent \
-     WHERE documents.hidden = false AND documents.id=$1", &[&id]);
+    let query = conn.query(&format!(
+        "{} AND documents.id=$1", BASE_QUERY),
+        &[&id]);
     if let Ok(rows) = query {
         if rows.is_empty() {
             return None
         }
         let row = rows.get(0);
         let mut document : Document = parse_document(&row);
-        println!("{}", document.image.src);
         document.tags = fetch_tags_by_document(pool, &document);
         return Some(document);
     } else {
@@ -157,17 +131,17 @@ pub fn parse_document(row: &Row) -> Document {
         id: row.get(0),
         title: row.get(1),
         from: Correspondent {
-        id: row.get(2),
-        name: row.get(3),
+            id: row.get(2),
+            name: row.get(3),
         },
         date: Utc.from_utc_date(&(row.get::<_, NaiveDate>(4)))
         .and_hms(0, 0, 0),
         added_on: Utc.from_utc_date(&(row.get::<_, NaiveDate>(5)))
             .and_hms(0, 0, 0),
-        pages: row.get(6),
-        ocr_result: row.get(7),
+        num_pages: row.get(6),
+        sha256sum: row.get(7),
         image: Picture {
-        src: format!("/documents/thumbnail/{}", row.get::<_, i32>(0))
+            src: format!("/documents/thumbnail/{}", row.get::<_, i32>(0))
         },
         tags: Vec::new()
     }
@@ -203,8 +177,9 @@ pub fn get_document_thumbnail(id: i32) -> File {
     File::open(&thumbnail_path).unwrap()
 }
 
+// TODO: Move to TagHandler!
 pub fn fetch_tags_by_document(pool : &Pool<PostgresConnectionManager>, doc: &Document) -> Vec<Tag> {
-    let conn = pool.clone().get().expect("Unable to get Pool Instance");
+    let conn = get_conn(&pool);
     let query = conn.query(r#"SELECT
         tags.slug,
         tags.name,
@@ -243,12 +218,4 @@ pub fn get_document_filename(pool : &Pool<PostgresConnectionManager>, id: i32) -
             String::from("unknown.pdf")
         }
     }
-}
-
-pub fn get_document_ocr(pool: &Pool<PostgresConnectionManager>, id: i32) -> String {
-    let t :Tesseract = Tesseract::new() ;
-    t.set_lang("ita");
-    t.set_image("/tmp/ocr.jpg");
-    t.recognize();
-    return String::from(t.get_text());
 }

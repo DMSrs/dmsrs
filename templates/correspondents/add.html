@@ -2,14 +2,10 @@
 {%  block page %}
   <div class="correspondents correspondents--new">
     <h1 class="heading heading--xl page-title">Add Correspondent</h1>
-    <form action="/correspondents/add" method="POST">
-      <div class="row">
-        <label for="correspondent_name">Name</label>
-        <input id="correspondent_name" name="name" type="text" autocomplete="off"/>
-      </div>
-      <div class="row">
-        <button class="button" type="submit">Add</button>
-      </div>
+    <form action="/tag/add" class="form" method="POST">
+			<label for="correspondent_name" class="form__label">Name</label>
+			<input id="correspondent_name" name="name" class="form__input" type="text" autocomplete="off"/>
+			<button class="button form__button" type="submit">Add</button>
     </form>
   </div>
 {%  endblock page %}

@@ -22,7 +22,6 @@ extern crate cairo;
 extern crate tesseract;
 
 use rocket_contrib::Template;
-use tera::Context;
 use std::path::PathBuf;
 use rocket::response::NamedFile;
 use std::path::Path;
@@ -31,23 +30,16 @@ mod fairings;
 use fairings::pathfairing::PathFairing;
 
 mod models;
-use models::document::Document;
-use models::tag::Tag;
-use models::picture::Picture;
-
 mod routes;
 use routes::RoutesHandler;
 
 mod handlers;
 
-use models::correspondent::Correspondent;
 use r2d2_postgres::PostgresConnectionManager;
 use r2d2_postgres::TlsMode;
 use r2d2::Pool;
 use models::menuentry::MenuEntry;
-use rocket::fairing::AdHoc;
-use std::sync::Mutex;
-use std::cell::RefCell;
+use handlers::dbhandler::create_database;
 
 #[get("/css/<file..>")]
 fn css_files(file: PathBuf) -> Option<NamedFile> {
@@ -67,6 +59,9 @@ fn main(){
             TlsMode::None).expect("Unable to connect to DB");
 
     let pool = Pool::new(manager).expect("Unable to create Pool");
+
+    // Create Database if it doesn't exists
+    create_database(&pool);
 
     let rh = RoutesHandler{ pool,
         menu: vec![MenuEntry{
@@ -100,6 +95,7 @@ fn main(){
         routes::documents::document_picture,
         routes::documents::document_ocr,
         routes::tags::index,
+        routes::tags::add,
         routes::tags::tag_single,
         css_files,
         img_files,

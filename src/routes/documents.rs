@@ -7,7 +7,6 @@ use models::document::Document;
 use handlers::documenthandler::fetch_document;
 
 use askama::Template;
-use fairings::pathfairing::PathFairing;
 use fairings::pathfairing::RocketPath;
 use std::sync::Arc;
 use handlers::documenthandler::get_document_thumbnail;
@@ -17,10 +16,8 @@ use rocket::Response;
 use rocket::http::Status;
 use rocket::Request;
 use rocket::http::ContentType;
-use rocket::http::hyper::mime::Mime;
 use rocket::http::Header;
 use handlers::documenthandler::get_document_filename;
-use handlers::documenthandler::get_document_ocr;
 
 #[derive(Template)]
 #[template(path = "documents/single.html")]
@@ -44,7 +41,7 @@ pub struct ServeDocument {
 }
 
 impl Responder<'static> for ServeDocument {
-    fn respond_to(self, request: &Request) -> Result<Response<'static>, Status> {
+    fn respond_to(self, _request: &Request) -> Result<Response<'static>, Status> {
         let path = format!("data/pdf/{}.pdf", self.document_id);
         if Path::new(&path).exists() {
             let cd = format!("attachment; filename=\"{}\"", self.document_name);
@@ -62,7 +59,7 @@ impl Responder<'static> for ServeDocument {
 }
 
 #[get("/documents/view/<id>")]
-pub fn document_view_single<'a>(rh: State<'a, RoutesHandler>, id: i32) -> Option<File> {
+pub fn document_view_single<'a>(_rh: State<'a, RoutesHandler>, id: i32) -> Option<File> {
     let path = format!("data/pdf/{}.pdf", id);
     if Path::new(&path).exists() {
         return Some(File::open(path).unwrap());
@@ -80,7 +77,7 @@ pub fn document_download_single<'a>(rh: State<'a, RoutesHandler>, id: i32) -> Se
 
 #[get("/documents/<id>")]
 pub fn document_single<'a>(rh: State<'a, RoutesHandler>, path: State<Arc<RocketPath>>, id: i32) -> Option<SingleDocument<'a>> {
-    let mut current_path : String = (*(path.path.lock().unwrap())).clone();
+    let current_path : String = (*(path.path.lock().unwrap())).clone();
     let document = fetch_document(&rh.pool, id);
 
     document.map(|doc| SingleDocument { document: doc, rh, current_path })
@@ -88,19 +85,17 @@ pub fn document_single<'a>(rh: State<'a, RoutesHandler>, path: State<Arc<RocketP
 
 #[get("/documents")]
 pub fn index<'a>(rh: State<'a, RoutesHandler>, path: State<Arc<RocketPath>>) -> MultipleDocuments<'a> {
-    let mut current_path : String = (*(path.path.lock().unwrap())).clone();
-    let mut documents : Vec<Document> = Vec::new();
-
+    let current_path : String = (*(path.path.lock().unwrap())).clone();
     let documents = fetch_documents(&rh.pool);
     MultipleDocuments { documents, rh, current_path }
 }
 
 #[get("/documents/thumbnail/<id>")]
-pub fn document_picture(rh: State<RoutesHandler>, id: i32) -> File {
+pub fn document_picture(_rh: State<RoutesHandler>, id: i32) -> File {
     return get_document_thumbnail(id);
 }
 
 #[get("/documents/ocr/<id>")]
-pub fn document_ocr(rh: State<RoutesHandler>, id: i32) -> String {
-    get_document_ocr(&rh.pool, id)
+pub fn document_ocr(_rh: State<RoutesHandler>, id: i32) -> String {
+    id.to_string()
 }

@@ -1,6 +1,5 @@
 use routes::RoutesHandler;
 use rocket::State;
-use tera::Context;
 use fairings::pathfairing::RocketPath;
 use std::sync::Arc;
 use askama::Template;
@@ -14,6 +13,6 @@ pub struct Home<'a> {
 
 #[get("/")]
 pub fn index<'a>(rh: State<'a, RoutesHandler>, path: State<Arc<RocketPath>>) -> Home<'a> {
-    let mut current_path : String = (*(path.path.lock().unwrap())).clone();
+    let current_path : String = (*(path.path.lock().unwrap())).clone();
     Home { rh, current_path }
 }

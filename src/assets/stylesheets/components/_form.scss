@@ -1,20 +1,24 @@
 .form {
-  display: flex;
-  flex-direction: column;
-}
-
-.form__group {
-  display: flex;
+	display: grid;
+	grid-template-columns:  rem(120px) auto;
+	grid-template-rows: auto;
+	grid-row-gap: rem(10px);
+	width: 40%;
 }
 
 .form__label {
-  margin-right: 30px;
-  font-weight: 700;
-  text-align: right;
+	margin-right: 30px;
+	font-weight: 700;
+	text-align: left;
+	align-self: center;
 }
 
 .form__input{
-  border: 1px solid $color-input-border;
-  padding: 5px 10px;
-  border-radius: 5px;
+	border: 1px solid $color-input-border;
+	padding: 5px 10px;
+	border-radius: 5px;
+}
+
+.form__button{
+	margin-top: 1em;
 }

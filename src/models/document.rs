@@ -13,8 +13,8 @@ pub struct Document {
     pub date : DateTime<Utc>,
     #[serde(with = "document_date_format")]
     pub added_on : DateTime<Utc>,
-    pub ocr_result : String,
-    pub pages: i32,
+    pub num_pages: i64,
+    pub sha256sum: String,
     pub image : Picture,
     pub tags : Vec<Tag>
 }
