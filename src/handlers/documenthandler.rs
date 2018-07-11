@@ -71,7 +71,6 @@ pub fn fetch_documents_by_tag(pool : &Pool<PostgresConnectionManager>, slug: Str
 
         for doc in documents.iter_mut() {
             doc.tags = fetch_tags_by_document(pool, &doc);
-            println!("{:?}", doc.tags);
         }
     } else {
         let err = query.unwrap_err();

@@ -32,7 +32,10 @@ pub fn create_database(pool: &Pool<PostgresConnectionManager>){
 
     conn.execute(r#"CREATE TABLE tags (
         slug TEXT primary key,
-        name TEXT, color TEXT
+        name TEXT, 
+        color TEXT,
+        hidden BOOLEAN DEFAULT FALSE,
+        system BOOLEAN DEFAULT FALSE
     );"#, &[]).expect("Unable to create tags");
 
     conn.execute(r#"CREATE TABLE tags_documents (
@@ -48,4 +51,9 @@ pub fn create_database(pool: &Pool<PostgresConnectionManager>){
 
     conn.execute(r#"INSERT INTO settings VALUES (
         'db_version', '1');"#, &[]).expect("Unable to add db version");
+
+    // Add Default Tags
+    conn.execute(r#"INSERT INTO tags VALUES 
+        ('untagged', 'Untagged', '607D8B', FALSE, TRUE),
+        ('new', 'New', 'E91E63', FALSE, TRUE)"#, &[]).expect("Unable to add default tags");
 }
