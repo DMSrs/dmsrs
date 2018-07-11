@@ -3,9 +3,13 @@
     {{ document.title }}
   </h3>
   <div class="document-box__metadata">
-    <a href="/correspondents/{{ document.from.id }}" class="document-box__from">
-      <span>{{ document.from.name }}</span>
+    {% match document.from %}
+    {% when Some with (from) %}
+    <a href="/correspondents/{{ from.id }}" class="document-box__from">
+      <span>{{ from.name }}</span>
     </a>
+    {% else %}
+    {% endmatch %}
     <div class="document-box__date">
       {{ document.date.format("%b %e, %Y") }}
     </div>

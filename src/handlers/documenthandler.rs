@@ -26,7 +26,7 @@ static BASE_QUERY : &'static str = r#"SELECT
 		(SELECT COUNT(*) FROM pages WHERE document_id = documents.id) as pages,
 		 sha256sum
  FROM documents 
- INNER JOIN correspondents ON correspondents.id = documents.correspondent 
+ LEFT JOIN correspondents ON correspondents.id = documents.correspondent 
  WHERE documents.hidden = false"#;
 
 fn get_conn(pool: &Pool<PostgresConnectionManager>) -> PooledConnection<PostgresConnectionManager> {
@@ -126,13 +126,20 @@ pub fn fetch_document(pool : &Pool<PostgresConnectionManager>, id: i32) -> Optio
 }
 
 pub fn parse_document(row: &Row) -> Document {
+
+    let correspondent_id : Option<i32> = row.get(2);
+    let mut correspondent : Option<Correspondent> = None;
+    if correspondent_id.is_some() {
+        correspondent = Some(Correspondent{
+            id: row.get(2),
+            name: row.get(3)
+        });
+    }
+
     return Document {
         id: row.get(0),
         title: row.get(1),
-        from: Correspondent {
-            id: row.get(2),
-            name: row.get(3),
-        },
+        from: correspondent,
         date: Utc.from_utc_date(&(row.get::<_, NaiveDate>(4)))
         .and_hms(0, 0, 0),
         added_on: Utc.from_utc_date(&(row.get::<_, NaiveDate>(5)))

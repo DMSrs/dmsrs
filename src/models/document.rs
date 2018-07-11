@@ -8,7 +8,7 @@ use chrono::DateTime;
 pub struct Document {
     pub id : i32,
     pub title : String,
-    pub from : Correspondent,
+    pub from : Option<Correspondent>,
     #[serde(with = "document_date_format")]
     pub date : DateTime<Utc>,
     #[serde(with = "document_date_format")]
