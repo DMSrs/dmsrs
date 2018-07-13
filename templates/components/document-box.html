@@ -9,6 +9,9 @@
       <span>{{ from.name }}</span>
     </a>
     {% else %}
+    <a class="document-box__from">
+      <span></span>
+    </a>
     {% endmatch %}
     <div class="document-box__date">
       {{ document.date.format("%b %e, %Y") }}

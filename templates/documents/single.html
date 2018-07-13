@@ -4,15 +4,17 @@
     <h1 class="heading heading--xl page-title">{{ document.title }}</h1>
     <div class="single-document">
       <div class="single-document__document document">
+        <div class="document__from-date-container">
         {% match document.from %}
         {% when Some with (from) %}
-        <div class="document__from-date-container">
           <a href="/correspondent/{{ from.id }}" class="document__from-date-container__from">
               <span>{{ from.name }}</span>
-        </a>
+          </a>
         {% else %}
+          <a class="document__from-date-container__from">
+            <span></span>
+          </a>
         {% endmatch %}
-
           <div class="document__from-date-container__date">{{ document.date.format("%b %e, %Y") }}</div>
         </div>
         <a href="/documents/view/{{ document.id }}" class="document__picture">
