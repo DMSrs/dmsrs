@@ -25,10 +25,14 @@ pub fn create_database(pool: &Pool<PostgresConnectionManager>){
 
     conn.execute(r#"CREATE TABLE pages (
         document_id INT REFERENCES documents(id),
-        ocr_result TEXT,
+        text TEXT,
+        tsv tsvector,
         number INT,
         PRIMARY KEY(document_id, number)
     );"#, &[]).expect("Unable to create pages");
+
+    conn.execute(r#"CREATE INDEX pages_tsv ON pages USING GIN (tsv);"#,
+                 &[]).expect("Unable to create indexes on pages");
 
     conn.execute(r#"CREATE TABLE tags (
         slug TEXT primary key,
